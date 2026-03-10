@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnet — Recruitment Marketing Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F5F9;
+  --white: #FFFFFF;
+  --border: #E5E7EB;
+  --border-light: #F0F1F5;
+  --text: #111827;
+  --text-2: #6B7280;
+  --text-3: #9CA3AF;
+  --accent: #2348FF;
+  --accent-light: #EEF1FF;
+  --accent-dark: #1a38d4;
+  --green: #10B981;
+  --green-light: #ECFDF5;
+  --orange: #F59E0B;
+  --orange-light: #FFFBEB;
+  --red: #EF4444;
+  --red-light: #FEF2F2;
+  --purple: #8B5CF6;
+  --purple-light: #F5F3FF;
+  --pink: #EC4899;
+  --pink-light: #FDF2F8;
+  --sidebar-w: 228px;
+  --topbar-h: 52px;
+  --r: 10px;
+  --r-sm: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.09);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;font-size:13.5px;-webkit-font-smoothing:antialiased}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar-w);background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:0}
+
+.sidebar-logo{padding:16px 18px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border-light)}
+.logo-svg{width:110px;height:auto}
+
+.sidebar-org{padding:10px 14px;margin:8px 10px 0;background:var(--bg);border-radius:var(--r-sm);display:flex;align-items:center;gap:8px;cursor:pointer;border:1px solid var(--border-light)}
+.org-avatar{width:28px;height:28px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:700;flex-shrink:0}
+.org-name{font-size:12.5px;font-weight:600;flex:1}
+.org-sub{font-size:10.5px;color:var(--text-3)}
+.org-chevron{color:var(--text-3);flex-shrink:0}
+
+.setup-card{margin:10px 10px 0;background:var(--accent-light);border-radius:var(--r-sm);padding:10px 12px;border:1px solid #D0D7FF}
+.setup-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.setup-title{font-size:11.5px;font-weight:700;color:var(--accent)}
+.setup-skip{font-size:10.5px;color:var(--text-3);cursor:pointer}
+.setup-bar{height:3px;background:#C7D0FF;border-radius:99px;overflow:hidden}
+.setup-fill{height:100%;width:60%;background:var(--accent);border-radius:99px}
+.setup-text{font-size:10.5px;color:var(--text-2);margin-top:4px}
+
+.nav-section{padding:14px 10px 0}
+.nav-label{font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.7px;padding:0 8px;margin-bottom:3px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:var(--r-sm);cursor:pointer;color:var(--text-2);font-size:13px;font-weight:500;transition:all .12s;margin-bottom:1px;position:relative;text-decoration:none}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{background:var(--accent-light);color:var(--accent)}
+.nav-item.active .nav-icon svg{stroke:var(--accent);fill:none}
+.nav-icon{width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-badge{font-size:9.5px;background:var(--accent);color:white;border-radius:99px;padding:2px 6px;margin-left:auto;font-weight:700}
+.nav-badge-green{background:var(--green)}
+.nav-dot{width:5px;height:5px;background:var(--orange);border-radius:50%;position:absolute;right:9px;top:50%;transform:translateY(-50%)}
+
+.nav-sub{padding-left:27px}
+.nav-sub-item{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:var(--r-sm);cursor:pointer;color:var(--text-3);font-size:12px;font-weight:500;transition:all .12s;margin-bottom:1px}
+.nav-sub-item:hover{color:var(--text-2);background:var(--bg)}
+.nav-sub-item.active{color:var(--accent);background:var(--accent-light)}
+
+.sidebar-bottom{margin-top:auto;padding:10px;border-top:1px solid var(--border-light)}
+.addon-item{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:var(--r-sm);cursor:pointer;color:var(--text-2);font-size:12.5px;font-weight:500;margin-bottom:1px}
+.badge-on{font-size:9.5px;background:var(--green);color:white;border-radius:99px;padding:2px 7px;font-weight:700;margin-left:auto}
+.badge-off{font-size:9.5px;background:var(--border);color:var(--text-3);border-radius:99px;padding:2px 7px;font-weight:600;margin-left:auto;cursor:pointer}
+
+.sidebar-user{display:flex;align-items:center;gap:9px;padding:10px 12px;cursor:pointer}
+.user-av{width:30px;height:30px;background:linear-gradient(135deg,#2348FF,#7C3AED);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:700;flex-shrink:0}
+.user-name{font-size:12.5px;font-weight:600}
+.user-org{font-size:11px;color:var(--text-3)}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh;min-width:0}
+
+/* ── TOPBAR ── */
+.topbar{height:var(--topbar-h);background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:12px;position:sticky;top:0;z-index:50}
+.topbar-title{font-size:16px;font-weight:700;letter-spacing:-.3px}
+.topbar-sub{font-size:12px;color:var(--text-3);margin-left:2px}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.topbar-btn{width:32px;height:32px;background:var(--bg);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid var(--border);transition:all .12s}
+.topbar-btn:hover{border-color:var(--accent);color:var(--accent)}
+.topbar-btn svg{width:15px;height:15px;stroke:var(--text-2);fill:none;stroke-width:1.8}
+.topbar-avatar{width:32px;height:32px;background:linear-gradient(135deg,#2348FF,#7C3AED);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:700;cursor:pointer;margin-left:4px}
+.topbar-search{flex:1;max-width:280px;position:relative}
+.topbar-search input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm);padding:7px 12px 7px 32px;font-family:inherit;font-size:12.5px;outline:none;color:var(--text)}
+.topbar-search svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--text-3);fill:none;stroke-width:2}
+.date-select{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);font-size:12.5px;font-weight:500;cursor:pointer}
+.date-select svg{width:14px;height:14px;stroke:var(--text-2);fill:none;stroke-width:1.8}
+
+/* ── PAGES ── */
+.page{padding:24px;display:none}
+.page.active{display:block}
+.page-header{margin-bottom:22px;display:flex;justify-content:space-between;align-items:flex-start}
+.page-title{font-size:21px;font-weight:700;letter-spacing:-.4px}
+.page-sub{font-size:12.5px;color:var(--text-2);margin-top:3px;display:flex;align-items:center;gap:6px}
+.dot{width:3px;height:3px;background:var(--text-3);border-radius:50%}
+.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.status-dot.green{background:var(--green)}
+.status-dot.orange{background:var(--orange)}
+.status-dot.red{background:var(--red)}
+
+/* ── BUTTONS ── */
+.btn{padding:8px 16px;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;border:none;display:inline-flex;align-items:center;gap:7px}
+.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.btn-primary{background:var(--accent);color:white}
+.btn-primary:hover{background:var(--accent-dark)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-secondary{background:var(--white);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.btn-ghost{background:none;color:var(--text-2);border:none;padding:6px 10px}
+.btn-ghost:hover{color:var(--text)}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn-xs{padding:3px 9px;font-size:11px;font-weight:600;border-radius:99px}
+
+/* ── CARDS ── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.card-sm{padding:16px}
+.card-title{font-size:13.5px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.card-action{font-size:12px;color:var(--accent);cursor:pointer;font-weight:500;background:none;border:none;font-family:inherit}
+.card-action:hover{text-decoration:underline}
+
+/* ── STAT CARDS ── */
+.stats-row{display:grid;gap:14px;margin-bottom:18px}
+.stats-4{grid-template-columns:repeat(4,1fr)}
+.stats-3{grid-template-columns:repeat(3,1fr)}
+.stats-5{grid-template-columns:repeat(5,1fr)}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+.stat-icon-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.stat-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat-icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}
+.stat-icon.blue{background:var(--accent-light);color:var(--accent)}
+.stat-icon.green{background:var(--green-light);color:var(--green)}
+.stat-icon.orange{background:var(--orange-light);color:var(--orange)}
+.stat-icon.purple{background:var(--purple-light);color:var(--purple)}
+.stat-icon.pink{background:var(--pink-light);color:var(--pink)}
+.stat-icon.red{background:var(--red-light);color:var(--red)}
+.stat-label{font-size:11.5px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.stat-value{font-size:26px;font-weight:700;letter-spacing:-.8px;margin-bottom:5px;line-height:1}
+.stat-change{font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:4px}
+.up{color:var(--green)}
+.down{color:var(--red)}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.g3{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px}
+.g3r{display:grid;grid-template-columns:1fr 2fr;gap:16px;margin-bottom:16px}
+.mb16{margin-bottom:16px}
+
+/* ── TABLES ── */
+.table{width:100%;border-collapse:collapse}
+.table th{text-align:left;font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;padding:9px 0;border-bottom:1px solid var(--border)}
+.table td{padding:10px 0;border-bottom:1px solid var(--border-light);font-size:13px;color:var(--text-2)}
+.table td:first-child{color:var(--text);font-weight:500}
+.table tr:last-child td{border-bottom:none}
+.table .td-num{font-weight:600;color:var(--text);font-variant-numeric:tabular-nums}
+
+/* ── ATS PANEL ── */
+.ats-item{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border-light)}
+.ats-item:last-child{border-bottom:none}
+.ats-left{display:flex;align-items:center;gap:10px}
+.ats-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ats-label{font-size:13px;color:var(--text-2)}
+.ats-num{font-size:18px;font-weight:700;letter-spacing:-.5px}
+
+/* ── PIPELINE / FUNNEL ── */
+.funnel-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light)}
+.funnel-row:last-child{border-bottom:none}
+.funnel-label{font-size:13px;font-weight:500;width:140px;flex-shrink:0}
+.funnel-bar-wrap{flex:1;background:var(--bg);border-radius:99px;height:8px;overflow:hidden}
+.funnel-bar{height:100%;border-radius:99px;background:var(--accent)}
+.funnel-count{font-size:12.5px;font-weight:700;width:50px;text-align:right;color:var(--text)}
+.funnel-rate{font-size:11px;color:var(--text-3);width:60px;text-align:right}
+
+/* ── PIPELINE STAGE DISTRIBUTION ── */
+.stage-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light)}
+.stage-item:last-child{border-bottom:none}
+.stage-color{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.stage-label{font-size:12.5px;flex:1}
+.stage-pct{font-size:12px;font-weight:700;color:var(--text)}
+.stage-count{font-size:11px;color:var(--text-3)}
+
+/* ── TAGS / BADGES ── */
+.tag{font-size:11px;border-radius:99px;padding:2px 9px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.tag svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2}
+.tag-blue{background:var(--accent-light);color:var(--accent)}
+.tag-green{background:var(--green-light);color:var(--green)}
+.tag-orange{background:var(--orange-light);color:var(--orange)}
+.tag-red{background:var(--red-light);color:var(--red)}
+.tag-purple{background:var(--purple-light);color:var(--purple)}
+.tag-gray{background:var(--bg);color:var(--text-2);border:1px solid var(--border)}
+
+/* ── KANBAN ── */
+.kanban{display:flex;gap:12px;overflow-x:auto;padding-bottom:10px}
+.kanban::-webkit-scrollbar{height:5px}
+.kanban::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+.k-col{min-width:210px;flex-shrink:0}
+.k-header{font-size:11.5px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.5px;padding:7px 10px;background:var(--bg);border-radius:var(--r-sm);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.k-count{background:var(--border);color:var(--text-2);border-radius:99px;padding:1px 6px;font-size:10.5px}
+.k-cards{min-height:80px}
+.k-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px 12px;margin-bottom:7px;cursor:grab;transition:all .12s;box-shadow:var(--shadow)}
+.k-card:hover{border-color:var(--accent);box-shadow:var(--shadow-md)}
+.k-card.dragging{opacity:.45;cursor:grabbing}
+.k-card-title{font-size:12.5px;font-weight:600;margin-bottom:7px;line-height:1.4}
+.k-card-meta{display:flex;flex-wrap:wrap;gap:4px}
+.k-drop{min-height:50px;border:2px dashed var(--border);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:11.5px;transition:all .12s}
+.k-drop.over{border-color:var(--accent);background:var(--accent-light);color:var(--accent)}
+.k-add{width:100%;padding:7px;border:1px dashed var(--border);border-radius:var(--r-sm);background:none;color:var(--text-3);font-size:12px;cursor:pointer;font-family:inherit;transition:all .12s;margin-top:4px}
+.k-add:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+
+/* ── CONVERSATIONS ── */
+.conv-list{display:flex;flex-direction:column;gap:0}
+.conv-item{display:flex;align-items:flex-start;gap:11px;padding:12px 14px;border-bottom:1px solid var(--border-light);cursor:pointer;transition:background .12s}
+.conv-item:hover{background:var(--bg)}
+.conv-item.unread{background:#FAFBFF}
+.conv-av{width:36px;height:36px;border-radius:50%;background:var(--accent-light);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:12px;font-weight:700;flex-shrink:0;position:relative}
+.conv-av .online{position:absolute;right:0;bottom:0;width:9px;height:9px;background:var(--green);border:2px solid white;border-radius:50%}
+.conv-name{font-size:13px;font-weight:700}
+.conv-preview{font-size:12px;color:var(--text-3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+.conv-time{font-size:11px;color:var(--text-3);margin-left:auto;white-space:nowrap}
+.conv-unread-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;margin-top:3px;margin-left:auto;flex-shrink:0}
+
+/* ── EMAIL LIST ── */
+.email-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);padding:13px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .12s;margin-bottom:8px}
+.email-card:hover{border-color:var(--accent)}
+.email-icon-wrap{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.email-icon-wrap svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}
+.email-name{font-size:13px;font-weight:700}
+.email-desc{font-size:12px;color:var(--text-2);margin-top:2px}
+.email-stat{text-align:right}
+.email-stat-n{font-size:16px;font-weight:700}
+.email-stat-l{font-size:10.5px;color:var(--text-3)}
+.status-pill{padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700}
+.pill-green{background:var(--green-light);color:var(--green)}
+.pill-draft{background:var(--bg);color:var(--text-3);border:1px solid var(--border)}
+.pill-orange{background:var(--orange-light);color:var(--orange)}
+.pill-red{background:var(--red-light);color:var(--red)}
+
+/* ── SOCIAL ── */
+.social-stat{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:center}
+.social-logo{width:40px;height:40px;border-radius:10px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center}
+.social-logo svg{width:22px;height:22px}
+.social-platform{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-3);margin-bottom:8px}
+.social-num{font-size:24px;font-weight:700;letter-spacing:-.6px}
+.social-lbl{font-size:11px;color:var(--text-3);margin-top:2px}
+.social-chg{font-size:11.5px;margin-top:6px}
+
+.sched-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.sched-day-h{font-size:11px;font-weight:600;color:var(--text-3);text-align:center;padding:4px 0 8px}
+.sched-post{border-radius:6px;padding:6px 8px;font-size:11px;font-weight:600;margin-bottom:5px;cursor:pointer}
+.sched-li{background:#E8F0FE;color:#1A73E8}
+.sched-em{background:#FEF9C3;color:#92400E}
+.sched-ig{background:#FCE7F3;color:#9D174D}
+.sched-fb{background:#E8F5E9;color:#1B5E20}
+
+/* ── AI STUDIO ── */
+.trend-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border-light)}
+.trend-item:last-child{border-bottom:none}
+.trend-rank{font-size:12px;font-weight:700;color:var(--text-3);width:18px;flex-shrink:0;padding-top:1px}
+.trend-body{flex:1}
+.trend-text{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:4px}
+.trend-score{font-size:11px;color:var(--green);font-weight:600;margin-bottom:5px}
+.trend-btns{display:flex;gap:5px;flex-wrap:wrap}
+
+.comp-item{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--border-light);align-items:flex-start}
+.comp-item:last-child{border-bottom:none}
+.comp-av{width:34px;height:34px;border-radius:8px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;font-weight:700;color:var(--text-2)}
+.comp-name{font-size:13px;font-weight:700}
+.comp-post{font-size:12px;color:var(--text-2);margin-top:2px;line-height:1.4}
+.comp-eng{font-size:11px;color:var(--green);font-weight:600;margin-top:4px}
+
+.platform-tabs{display:flex;gap:5px}
+.ptab{padding:5px 13px;border-radius:99px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;border:1px solid var(--border);background:none;color:var(--text-2);transition:all .12s}
+.ptab.active{background:var(--accent);color:white;border-color:var(--accent)}
+
+.writer-input{width:100%;border:1px solid var(--border);border-radius:var(--r-sm);padding:11px 13px;font-family:inherit;font-size:13px;resize:vertical;min-height:78px;color:var(--text);outline:none;transition:border .15s}
+.writer-input:focus{border-color:var(--accent)}
+.writer-output{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;font-size:13.5px;line-height:1.75;color:var(--text);min-height:140px;white-space:pre-wrap;font-family:inherit}
+
+/* ── API SETUP ── */
+.api-setup{background:var(--accent-light);border:1px solid #C7D0FF;border-radius:var(--r);padding:16px;margin-bottom:18px}
+.api-setup-title{font-size:13.5px;font-weight:700;color:var(--accent);margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.api-setup-title svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:2}
+.api-setup-desc{font-size:12.5px;color:var(--text-2);margin-bottom:10px}
+.api-row{display:flex;gap:8px}
+.api-field{flex:1;border:1px solid #C7D0FF;border-radius:var(--r-sm);padding:8px 12px;font-family:'Inter',monospace;font-size:12px;outline:none;background:white}
+.api-field:focus{border-color:var(--accent)}
+
+/* ── CONTACTS / CRM ── */
+.contact-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border-light);cursor:pointer;transition:background .12s}
+.contact-row:hover{background:var(--bg);margin:0 -20px;padding:11px 20px}
+.contact-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0}
+.contact-name{font-size:13px;font-weight:600;flex:1}
+.contact-role{font-size:12px;color:var(--text-3);flex:1}
+.contact-status{flex-shrink:0}
+.contact-date{font-size:11.5px;color:var(--text-3);flex-shrink:0;width:80px;text-align:right}
+
+/* ── AUTOMATION ── */
+.auto-item{background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;display:flex;align-items:center;gap:14px;margin-bottom:8px;cursor:pointer;transition:all .12s}
+.auto-item:hover{border-color:var(--accent)}
+.auto-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.auto-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.auto-name{font-size:13px;font-weight:700}
+.auto-desc{font-size:12px;color:var(--text-2);margin-top:2px}
+.auto-stats{font-size:12px;font-weight:600;color:var(--text);margin-left:auto;text-align:right}
+.auto-sub{font-size:11px;color:var(--text-3)}
+.toggle{width:36px;height:20px;background:var(--border);border-radius:99px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.toggle.on{background:var(--green)}
+.toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:white;top:2px;left:2px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on::after{left:18px}
+
+/* ── REPUTATION ── */
+.review-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-light)}
+.review-item:last-child{border-bottom:none}
+.review-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0}
+.review-stars{color:var(--orange);font-size:13px;letter-spacing:1px}
+.review-text{font-size:12.5px;color:var(--text-2);margin-top:4px;line-height:1.5}
+.review-meta{font-size:11px;color:var(--text-3);margin-top:5px}
+
+/* ── CALENDAR ── */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-day-h{font-size:11px;font-weight:600;color:var(--text-3);text-align:center;padding:4px}
+.cal-day{min-height:64px;border:1px solid var(--border-light);border-radius:var(--r-sm);padding:5px;background:white;transition:background .12s;cursor:pointer}
+.cal-day:hover{background:var(--bg)}
+.cal-day.today{border-color:var(--accent);background:var(--accent-light)}
+.cal-day-num{font-size:11.5px;font-weight:600;color:var(--text-3);margin-bottom:3px}
+.cal-day.today .cal-day-num{color:var(--accent)}
+.cal-event{font-size:9.5px;border-radius:3px;padding:2px 5px;margin-bottom:2px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ── REPORTING ── */
+.report-chart{height:180px;display:flex;align-items:flex-end;gap:8px;padding-top:10px}
+.bar-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;border-radius:4px 4px 0 0;min-height:4px;background:var(--accent);opacity:.8;transition:opacity .2s}
+.bar:hover{opacity:1}
+.bar-label{font-size:10px;color:var(--text-3);font-weight:500}
+.bar-val{font-size:9.5px;color:var(--text-2);font-weight:600}
+
+/* ── MODAL ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.overlay.open{display:flex}
+.modal{background:white;border-radius:var(--r);padding:24px;width:500px;max-width:92vw;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-title{font-size:16px;font-weight:700}
+.modal-close{cursor:pointer;color:var(--text-3);font-size:20px;line-height:1;background:none;border:none;font-family:inherit}
+.form-g{margin-bottom:13px}
+.form-l{font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:5px;display:block}
+.form-i{width:100%;border:1px solid var(--border);border-radius:var(--r-sm);padding:9px 12px;font-family:inherit;font-size:13px;outline:none;transition:border .15s;color:var(--text)}
+.form-i:focus{border-color:var(--accent)}
+.modal-f{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+
+/* ── NOTIF ── */
+.notif{position:fixed;bottom:22px;right:22px;background:var(--text);color:white;border-radius:var(--r-sm);padding:11px 16px;font-size:13px;font-weight:600;box-shadow:var(--shadow-md);z-index:400;display:none}
+.notif.show{display:block;animation:slideUp .25s ease}
+@keyframes slideUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+.notif.success{background:var(--green)}
+.notif.error{background:var(--red)}
+
+/* ── LOADING ── */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
+
+/* ── SVG CHART ── */
+.sparkline{width:100%;height:80px}
+
+/* ── LINK CONNECT BANNERS ── */
+.connect-banner{background:linear-gradient(135deg,#0A66C2 0%,#0A66C2 100%);border-radius:var(--r);padding:16px 20px;color:white;display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.connect-banner.ga4{background:linear-gradient(135deg,#FF6D00,#FF8F00)}
+.connect-banner-icon{width:42px;height:42px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.connect-banner-icon svg{width:22px;height:22px;fill:white}
+.connect-banner h3{font-size:14px;font-weight:700;margin-bottom:3px}
+.connect-banner p{font-size:12px;opacity:.85}
+.connect-banner .btn-white{background:white;color:var(--text);margin-left:auto;flex-shrink:0}
+
+/* ── AI AGENTS ── */
+.agent-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px;transition:all .15s;cursor:pointer}
+.agent-card:hover{border-color:var(--accent);box-shadow:var(--shadow-md)}
+.agent-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.agent-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.agent-icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}
+.agent-name{font-size:14px;font-weight:700;margin-bottom:3px}
+.agent-desc{font-size:12px;color:var(--text-2);line-height:1.5}
+.agent-footer{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-light)}
+.agent-stat{font-size:12px;color:var(--text-3)}
+.agent-stat strong{color:var(--text);font-weight:700}
+
+/* ── SITES / PAGES ── */
+.site-page{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border-light);cursor:pointer}
+.site-page:hover{margin:0 -20px;padding:11px 20px;background:var(--bg)}
+.site-thumb{width:48px;height:36px;background:var(--bg);border:1px solid var(--border);border-radius:6px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.site-thumb svg{width:18px;height:18px;stroke:var(--text-3);fill:none;stroke-width:1.5}
+.site-url{font-size:13px;font-weight:600;flex:1}
+.site-meta{font-size:12px;color:var(--text-3)}
+.site-stats{text-align:right;flex-shrink:0}
+.site-stat-n{font-size:13px;font-weight:700}
+.site-stat-l{font-size:10.5px;color:var(--text-3)}
+
+/* ── INTEGRATIONS IN SETTINGS ── */
+.int-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-light)}
+.int-item:last-child{border-bottom:none}
+.int-logo{width:38px;height:38px;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;font-weight:700}
+.int-name{font-size:13px;font-weight:700}
+.int-desc{font-size:12px;color:var(--text-3);margin-top:2px}
+
+/* scrollbar for kanban */
+.kanban::-webkit-scrollbar{height:4px}
+</style>
+</head>
+<body>
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <!-- Magnet Logo SVG (traced from uploaded logo) -->
+    <svg class="logo-svg" viewBox="0 0 260 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Magnet icon mark -->
+      <path d="M28 12 C14 12, 4 22, 4 36 C4 50, 14 60, 28 60 L38 60 L38 48 L28 48 C21 48, 16 43, 16 36 C16 29, 21 24, 28 24 L38 24 L38 12 Z" fill="#2348FF"/>
+      <path d="M50 12 C64 12, 74 22, 74 36 C74 50, 64 60, 50 60 L40 60 L40 48 L50 48 C57 48, 62 43, 62 36 C62 29, 57 24, 50 24 L40 24 L40 12 Z" fill="#2348FF"/>
+      <!-- magnet text -->
+      <text x="88" y="50" font-family="Inter, sans-serif" font-weight="700" font-size="32" fill="#2348FF" letter-spacing="-1">magnet</text>
+    </svg>
+  </div>
+
+  <div class="sidebar-org">
+    <div class="org-avatar">GM</div>
+    <div style="flex:1;min-width:0">
+      <div class="org-name">Good Moves AU</div>
+      <div class="org-sub">Collingwood, Victoria</div>
+    </div>
+    <svg class="org-chevron" style="width:14px;height:14px;stroke:var(--text-3);fill:none;stroke-width:2" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+  </div>
+
+  <div class="setup-card">
+    <div class="setup-top"><span class="setup-title">Finish set-up</span><span class="setup-skip">Skip</span></div>
+    <div class="setup-bar"><div class="setup-fill"></div></div>
+    <div class="setup-text">3 of 5 steps complete</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-item active" data-page="dashboard">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+      Dashboard
+    </div>
+    <div class="nav-item" data-page="conversations">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+      Conversations
+      <span class="nav-badge">4</span>
+    </div>
+    <div class="nav-item" data-page="calendars">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+      Calendars
+    </div>
+    <div class="nav-item" data-page="contacts">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+      Contacts
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Marketing</div>
+    <div class="nav-item" data-page="aistudio">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+      AI Studio
+      <span class="nav-badge">New</span>
+    </div>
+    <div class="nav-item" data-page="aiagents">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><circle cx="12" cy="8" r="2" fill="currentColor" style="stroke:none;opacity:.3"/></svg></span>
+      AI Agents
+    </div>
+    <div class="nav-item" data-page="marketing">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+      Marketing
+      <span class="nav-dot"></span>
+    </div>
+    <div class="nav-item" data-page="automation">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+      Automation
+    </div>
+    <div class="nav-item" data-page="pipeline">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span>
+      Content Pipeline
+    </div>
+    <div class="nav-item" data-page="social">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></span>
+      Social Media
+    </div>
+    <div class="nav-item" data-page="email">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg></span>
+      Email & Flows
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Web</div>
+    <div class="nav-item" data-page="website">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+      Website
+    </div>
+    <div class="nav-item" data-page="sites">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+      Sites & Pages
+    </div>
+    <div class="nav-item" data-page="media">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></span>
+      Media Storage
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Performance</div>
+    <div class="nav-item" data-page="reputation">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+      Reputation
+    </div>
+    <div class="nav-item" data-page="reporting">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span>
+      Reporting
+    </div>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="nav-label" style="padding:0 8px;margin-bottom:6px">Add-ons</div>
+    <div class="addon-item">
+      <span class="nav-icon"><svg style="width:16px;height:16px;stroke:var(--text-2);fill:none;stroke-width:1.8" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span>
+      LinkedIn Pro
+      <span class="badge-on">Active</span>
+    </div>
+    <div class="addon-item">
+      <span class="nav-icon"><svg style="width:16px;height:16px;stroke:var(--text-2);fill:none;stroke-width:1.8" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+      ATS Sync
+      <span class="badge-off" onclick="showNotif('Opening ATS integration...','success')">Connect</span>
+    </div>
+    <div class="addon-item">
+      <span class="nav-icon"><svg style="width:16px;height:16px;stroke:var(--text-2);fill:none;stroke-width:1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+      Mobile App
+      <span class="badge-off">Soon</span>
+    </div>
+
+    <div class="nav-item" data-page="settings" style="margin-top:8px">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+      Settings
+    </div>
+
+    <div class="sidebar-user" style="margin-top:8px;padding:8px 9px;border-top:1px solid var(--border-light)">
+      <div class="user-av">EP</div>
+      <div>
+        <div class="user-name">Emma Pinyon</div>
+        <div class="user-org">Good Moves AU</div>
+      </div>
+      <svg style="width:14px;height:14px;stroke:var(--text-3);fill:none;stroke-width:2;margin-left:auto" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+    </div>
+  </div>
+</aside>
+
+<!-- ══════════ MAIN ══════════ -->
+<main class="main">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div id="tb-title" class="topbar-title">Dashboard</div>
+  <div id="tb-sub" class="topbar-sub"></div>
+  <div class="topbar-right">
+    <div class="topbar-search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search..." />
+    </div>
+    <div class="date-select">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Last 30 Days
+      <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <div class="topbar-btn" title="Notifications">
+      <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    </div>
+    <div class="topbar-btn" title="Help">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+    </div>
+    <div class="topbar-avatar">EP</div>
+  </div>
+</div>
+
+<!-- ════════ DASHBOARD ════════ -->
+<div id="page-dashboard" class="page active">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Dashboard</div>
+      <div class="page-sub">
+        <span class="status-dot green"></span> GA4 connected
+        <span class="dot"></span>
+        <span class="status-dot green"></span> JobAdder synced 2 min ago
+        <span class="dot"></span>
+        Lead capture active
+      </div>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="showNotif('Refreshing data...','success')">
+      <svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+      Refresh
+    </button>
+  </div>
+
+  <div class="stats-row stats-4 mb16">
+    <div class="stat-card">
+      <div class="stat-icon-row">
+        <div class="stat-icon blue"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+        <span class="tag tag-green"><svg viewBox="0 0 24 24"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>18%</span>
+      </div>
+      <div class="stat-label">Sessions (7D)</div>
+      <div class="stat-value">8,847</div>
+      <div class="stat-change"><span class="up">↑ 18%</span> vs last period</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon-row">
+        <div class="stat-icon green"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.25h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.15 6.15l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.92 17z"/></svg></div>
+        <span class="tag tag-green"><svg viewBox="0 0 24 24"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>34%</span>
+      </div>
+      <div class="stat-label">Leads Captured</div>
+      <div class="stat-value">127</div>
+      <div class="stat-change"><span class="up">↑ 34</span> vs last period</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon-row">
+        <div class="stat-icon purple"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+        <span class="tag tag-green"><svg viewBox="0 0 24 24"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>12%</span>
+      </div>
+      <div class="stat-label">New Visitors</div>
+      <div class="stat-value">61%</div>
+      <div class="stat-change"><span class="up">↑ 3pts</span> vs last period</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon-row">
+        <div class="stat-icon orange"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <span class="tag tag-green"><svg viewBox="0 0 24 24"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>8%</span>
+      </div>
+      <div class="stat-label">Avg Session</div>
+      <div class="stat-value">2m 41s</div>
+      <div class="stat-change"><span class="up">↑ 14s</span> vs last period</div>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card">
+      <div class="card-title">Daily Sessions & Leads <button class="card-action">View in GA4 →</button></div>
+      <svg class="sparkline" viewBox="0 0 420 100" fill="none">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2348FF" stop-opacity=".12"/>
+            <stop offset="100%" stop-color="#2348FF" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#10B981" stop-opacity=".12"/>
+            <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0 70 C40 65,60 50,90 45 C120 40,140 80,175 75 C210 70,230 35,265 25 C300 15,320 30,355 20 C380 14,400 35,420 38" stroke="#2348FF" stroke-width="2" fill="none"/>
+        <path d="M0 70 C40 65,60 50,90 45 C120 40,140 80,175 75 C210 70,230 35,265 25 C300 15,320 30,355 20 C380 14,400 35,420 38 L420 100 L0 100Z" fill="url(#g1)"/>
+        <path d="M0 82 C40 80,60 70,90 65 C120 60,140 85,175 82 C210 79,230 60,265 55 C300 50,320 58,355 48 C380 42,400 60,420 58" stroke="#10B981" stroke-width="1.5" fill="none" stroke-dasharray="4,3"/>
+        <text x="0" y="97" font-size="9" fill="#9CA3AF" font-family="Inter">Feb 25</text>
+        <text x="160" y="97" font-size="9" fill="#9CA3AF" font-family="Inter">Mar 3</text>
+        <text x="350" y="97" font-size="9" fill="#9CA3AF" font-family="Inter">Mar 9</text>
+      </svg>
+      <div style="display:flex;gap:16px;margin-top:8px">
+        <div style="display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--text-2)"><div style="width:12px;height:2px;background:var(--accent);border-radius:99px"></div>Sessions</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--text-2)"><div style="width:12px;height:2px;background:var(--green);border-radius:99px;border-top:1.5px dashed var(--green)"></div>Leads</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">ATS Data Flow
+        <span class="tag tag-green" style="font-size:10.5px">JobAdder</span>
+      </div>
+      <div class="ats-item">
+        <div class="ats-left"><div class="ats-dot" style="background:var(--green)"></div><div><div class="ats-label">Candidates from website</div><div style="font-size:11px;color:var(--text-3)">This month</div></div></div>
+        <div class="ats-num" style="color:var(--green)">89</div>
+      </div>
+      <div class="ats-item">
+        <div class="ats-left"><div class="ats-dot" style="background:var(--accent)"></div><div><div class="ats-label">Synced to ATS</div><div style="font-size:11px;color:var(--text-3)">94% sync rate</div></div></div>
+        <div class="ats-num" style="color:var(--accent)">84</div>
+      </div>
+      <div class="ats-item">
+        <div class="ats-left"><div class="ats-dot" style="background:var(--purple)"></div><div><div class="ats-label">Job applications</div><div style="font-size:11px;color:var(--text-3)">This month</div></div></div>
+        <div class="ats-num" style="color:var(--purple)">312</div>
+      </div>
+      <div class="ats-item">
+        <div class="ats-left"><div class="ats-dot" style="background:var(--orange)"></div><div><div class="ats-label">Contact form leads</div><div style="font-size:11px;color:var(--text-3)">Routed to CRM</div></div></div>
+        <div class="ats-num" style="color:var(--orange)">38</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Marketing Pipeline — Funnel <button class="card-action">All Pipelines ▾</button></div>
+      <div class="funnel-row"><div class="funnel-label">New Lead</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%"></div></div><div class="funnel-count">127</div><div class="funnel-rate">—</div></div>
+      <div class="funnel-row"><div class="funnel-label">Contacted</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:74%"></div></div><div class="funnel-count">94</div><div class="funnel-rate">74%</div></div>
+      <div class="funnel-row"><div class="funnel-label">Qualified</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:52%"></div></div><div class="funnel-count">66</div><div class="funnel-rate">70%</div></div>
+      <div class="funnel-row"><div class="funnel-label">Proposal Sent</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:34%"></div></div><div class="funnel-count">43</div><div class="funnel-rate">65%</div></div>
+      <div class="funnel-row"><div class="funnel-label">Won</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:18%;background:var(--green)"></div></div><div class="funnel-count">23</div><div class="funnel-rate">53%</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Stage Distribution <button class="card-action">Marketing Pipeline ▾</button></div>
+      <div style="margin-bottom:14px">
+        <div style="font-size:11.5px;color:var(--text-3);margin-bottom:4px">Conversion Rate</div>
+        <div style="font-size:32px;font-weight:700;letter-spacing:-1px;color:var(--accent)">18.1%</div>
+        <div style="font-size:12px;color:var(--text-3)">Lead → Won</div>
+      </div>
+      <div class="stage-item"><div class="stage-color" style="background:var(--accent)"></div><div class="stage-label">New Lead</div><div class="stage-pct">37%</div><div class="stage-count" style="margin-left:8px;width:30px;text-align:right">47</div></div>
+      <div class="stage-item"><div class="stage-color" style="background:#60A5FA"></div><div class="stage-label">Contacted</div><div class="stage-pct">26%</div><div class="stage-count" style="margin-left:8px;width:30px;text-align:right">33</div></div>
+      <div class="stage-item"><div class="stage-color" style="background:var(--purple)"></div><div class="stage-label">Qualified</div><div class="stage-pct">18%</div><div class="stage-count" style="margin-left:8px;width:30px;text-align:right">23</div></div>
+      <div class="stage-item"><div class="stage-color" style="background:var(--orange)"></div><div class="stage-label">Proposal</div><div class="stage-pct">11%</div><div class="stage-count" style="margin-left:8px;width:30px;text-align:right">14</div></div>
+      <div class="stage-item"><div class="stage-color" style="background:var(--green)"></div><div class="stage-label">Won</div><div class="stage-pct">8%</div><div class="stage-count" style="margin-left:8px;width:30px;text-align:right">10</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Top Pages <button class="card-action">View all →</button></div>
+    <table class="table">
+      <tr><th>Page</th><th>Sessions</th><th>Bounce</th><th>Avg Time</th><th>Leads</th></tr>
+      <tr><td>/jobs/marketing-manager-melbourne</td><td class="td-num">1,247</td><td>38%</td><td>3m 12s</td><td class="td-num" style="color:var(--green)">24</td></tr>
+      <tr><td>/salary-guide-2025</td><td class="td-num">986</td><td>22%</td><td>4m 41s</td><td class="td-num" style="color:var(--green)">41</td></tr>
+      <tr><td>/jobs/senior-recruiter-sydney</td><td class="td-num">743</td><td>45%</td><td>2m 08s</td><td class="td-num" style="color:var(--green)">12</td></tr>
+      <tr><td>/about-us</td><td class="td-num">612</td><td>55%</td><td>1m 55s</td><td class="td-num" style="color:var(--green)">8</td></tr>
+      <tr><td>/contact</td><td class="td-num">489</td><td>18%</td><td>2m 30s</td><td class="td-num" style="color:var(--green)">37</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ CONVERSATIONS ════════ -->
+<div id="page-conversations" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Conversations</div><div class="page-sub">All inbound messages in one place</div></div>
+    <button class="btn btn-primary btn-sm">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      New Conversation
+    </button>
+  </div>
+  <div class="g3r">
+    <div class="card card-sm" style="padding:0">
+      <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;gap:8px">
+        <button class="ptab active">All</button>
+        <button class="ptab">Unread <span style="background:var(--accent);color:white;border-radius:99px;padding:1px 6px;font-size:10px;margin-left:2px">4</span></button>
+        <button class="ptab">Mine</button>
+      </div>
+      <div class="conv-list">
+        <div class="conv-item unread" onclick="showNotif('Opening conversation...','success')">
+          <div class="conv-av" style="background:#EEF1FF;color:var(--accent)">JK<div class="online"></div></div>
+          <div style="flex:1;min-width:0">
+            <div class="conv-name">James Kim</div>
+            <div class="conv-preview">Hi Emma, I saw your LinkedIn post about...</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <div class="conv-time">2m</div>
+            <div class="conv-unread-dot"></div>
+          </div>
+        </div>
+        <div class="conv-item unread">
+          <div class="conv-av" style="background:#ECFDF5;color:var(--green)">SR</div>
+          <div style="flex:1;min-width:0">
+            <div class="conv-name">Sarah Reynolds</div>
+            <div class="conv-preview">Following up on the Marketing Manager role...</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <div class="conv-time">18m</div>
+            <div class="conv-unread-dot"></div>
+          </div>
+        </div>
+        <div class="conv-item">
+          <div class="conv-av" style="background:#F5F3FF;color:var(--purple)">MP</div>
+          <div style="flex:1;min-width:0">
+            <div class="conv-name">Michael Park</div>
+            <div class="conv-preview">Thanks for the intro. I'm available Thu...</div>
+          </div>
+          <div class="conv-time">1h</div>
+        </div>
+        <div class="conv-item">
+          <div class="conv-av" style="background:#FFF7ED;color:var(--orange)">TC</div>
+          <div style="flex:1;min-width:0">
+            <div class="conv-name">TechCorp HR</div>
+            <div class="conv-preview">We'd like to engage Good Moves for our...</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <div class="conv-time">3h</div>
+            <div class="conv-unread-dot"></div>
+          </div>
+        </div>
+        <div class="conv-item">
+          <div class="conv-av" style="background:#FDF2F8;color:var(--pink)">AL</div>
+          <div style="flex:1;min-width:0">
+            <div class="conv-name">Ava Liu</div>
+            <div class="conv-preview">Just submitted my application for the...</div>
+          </div>
+          <div class="conv-time">Yesterday</div>
+        </div>
+        <div class="conv-item">
+          <div class="conv-av" style="background:#EEF1FF;color:var(--accent)">BW</div>
+          <div style="flex:1;min-width:0">
+            <div class="conv-name">Ben Wright</div>
+            <div class="conv-preview">Can we chat about the UX Lead role?</div>
+          </div>
+          <div class="conv-time">Yesterday</div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-sm" style="display:flex;flex-direction:column;gap:0;padding:0">
+      <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px">
+        <div class="conv-av" style="background:#EEF1FF;color:var(--accent);width:34px;height:34px;font-size:11px">JK</div>
+        <div>
+          <div style="font-size:13px;font-weight:700">James Kim</div>
+          <div style="font-size:11.5px;color:var(--green)">Online now</div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:6px">
+          <div class="topbar-btn"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--text-2);fill:none;stroke-width:2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13"/></svg></div>
+          <div class="topbar-btn"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--text-2);fill:none;stroke-width:2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></div>
+        </div>
+      </div>
+      <div style="flex:1;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:300px">
+        <div style="display:flex;gap:8px">
+          <div style="width:28px;height:28px;border-radius:50%;background:#EEF1FF;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0">JK</div>
+          <div style="background:var(--bg);border-radius:0 10px 10px 10px;padding:10px 13px;font-size:13px;max-width:80%;line-height:1.5">Hi Emma! I saw your LinkedIn post about the skills gap in tech hiring. Really resonated. I'm currently looking for a Senior Product role.</div>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <div style="background:var(--accent);border-radius:10px 0 10px 10px;padding:10px 13px;font-size:13px;max-width:80%;line-height:1.5;color:white">Hi James! Great timing — we have a Senior PM role at a Series B fintech that just came in. Would you be open to a quick chat this week?</div>
+          <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#2348FF,#7C3AED);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0">EP</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <div style="width:28px;height:28px;border-radius:50%;background:#EEF1FF;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0">JK</div>
+          <div style="background:var(--bg);border-radius:0 10px 10px 10px;padding:10px 13px;font-size:13px;max-width:80%;line-height:1.5">Absolutely! Thursday afternoon works great for me.</div>
+        </div>
+      </div>
+      <div style="padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px">
+        <input class="form-i" placeholder="Type a message..." style="flex:1"/>
+        <button class="btn btn-primary btn-sm" onclick="showNotif('Message sent!','success')">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ AI STUDIO ════════ -->
+<div id="page-aistudio" class="page">
+  <div class="page-header">
+    <div>
+      <div class="page-title">AI Studio</div>
+      <div class="page-sub">Trending topics, competitor intel, and AI content writing — all in one place</div>
+    </div>
+  </div>
+
+  <div class="api-setup" id="api-setup-section">
+    <div class="api-setup-title">
+      <svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+      Connect your AI brain
+    </div>
+    <div class="api-setup-desc">Add your Anthropic API key to enable real AI content writing. Get a free key at <strong>console.anthropic.com</strong> — first $5 free.</div>
+    <div class="api-row">
+      <input class="api-field" type="password" id="api-key-input" placeholder="sk-ant-api03-..." />
+      <button class="btn btn-primary btn-sm" onclick="saveApiKey()">Save Key</button>
+      <button class="btn btn-secondary btn-sm" onclick="useDemoMode()">Demo Mode</button>
+    </div>
+  </div>
+
+  <div class="g2 mb16">
+    <div class="card">
+      <div class="card-title">
+        Trending in Recruitment
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:11px;color:var(--text-3)">Updated 9:00am</span>
+          <button class="card-action" onclick="showNotif('Scanning LinkedIn trends...','success')">
+            <svg style="width:13px;height:13px;stroke:var(--accent);fill:none;stroke-width:2;display:inline" viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Refresh
+          </button>
+        </div>
+      </div>
+      <div class="trend-item">
+        <div class="trend-rank">#1</div>
+        <div class="trend-body">
+          <div class="trend-text">AI replacing entry-level jobs — what candidates need to know</div>
+          <div class="trend-score">847 engagements this week</div>
+          <div class="trend-btns">
+            <button class="btn btn-xs btn-secondary" onclick="writeTopic('AI replacing entry-level jobs — what candidates need to know','linkedin')">Write LinkedIn</button>
+            <button class="btn btn-xs btn-secondary" onclick="addToPipeline('AI replacing entry-level jobs')">+ Pipeline</button>
+          </div>
+        </div>
+      </div>
+      <div class="trend-item">
+        <div class="trend-rank">#2</div>
+        <div class="trend-body">
+          <div class="trend-text">The 4-day work week: which industries are leading?</div>
+          <div class="trend-score">634 engagements this week</div>
+          <div class="trend-btns">
+            <button class="btn btn-xs btn-secondary" onclick="writeTopic('The 4-day work week in Australian recruitment','linkedin')">Write LinkedIn</button>
+            <button class="btn btn-xs btn-secondary" onclick="addToPipeline('4-day work week article')">+ Pipeline</button>
+          </div>
+        </div>
+      </div>
+      <div class="trend-item">
+        <div class="trend-rank">#3</div>
+        <div class="trend-body">
+          <div class="trend-text">2025 salary expectations gap: candidates vs employers</div>
+          <div class="trend-score">521 engagements this week</div>
+          <div class="trend-btns">
+            <button class="btn btn-xs btn-secondary" onclick="writeTopic('2025 salary expectations gap between candidates and employers in Australia','linkedin')">Write LinkedIn</button>
+            <button class="btn btn-xs btn-secondary" onclick="addToPipeline('Salary expectations guide 2025')">+ Pipeline</button>
+          </div>
+        </div>
+      </div>
+      <div class="trend-item">
+        <div class="trend-rank">#4</div>
+        <div class="trend-body">
+          <div class="trend-text">Skills-based hiring: why degrees are losing power</div>
+          <div class="trend-score">489 engagements this week</div>
+          <div class="trend-btns">
+            <button class="btn btn-xs btn-secondary" onclick="writeTopic('Skills-based hiring and why degrees matter less in 2025','linkedin')">Write LinkedIn</button>
+            <button class="btn btn-xs btn-secondary" onclick="addToPipeline('Skills-based hiring post')">+ Pipeline</button>
+          </div>
+        </div>
+      </div>
+      <div class="trend-item">
+        <div class="trend-rank">#5</div>
+        <div class="trend-body">
+          <div class="trend-text">Ghosting in recruitment — it goes both ways</div>
+          <div class="trend-score">412 engagements this week</div>
+          <div class="trend-btns">
+            <button class="btn btn-xs btn-secondary" onclick="writeTopic('Ghosting in recruitment from both sides','linkedin')">Write LinkedIn</button>
+            <button class="btn btn-xs btn-secondary" onclick="addToPipeline('Ghosting in recruitment post')">+ Pipeline</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Competitor Top Posts
+        <button class="card-action" onclick="showNotif('Scanning LinkedIn...','success')">Scan now</button>
+      </div>
+      <div class="comp-item">
+        <div class="comp-av">H</div>
+        <div>
+          <div class="comp-name">Hays Recruitment</div>
+          <div class="comp-post">"5 signs it's time to change jobs in 2025"</div>
+          <div class="comp-eng">2.4k reactions · 187 comments</div>
+          <div style="margin-top:5px"><button class="btn btn-xs btn-secondary" onclick="writeTopic('5 signs it is time to change jobs - Good Moves perspective','linkedin')">Write our version</button></div>
+        </div>
+      </div>
+      <div class="comp-item">
+        <div class="comp-av">R</div>
+        <div>
+          <div class="comp-name">Robert Half</div>
+          <div class="comp-post">"Tech skills paying the most in Melbourne right now"</div>
+          <div class="comp-eng">1.8k reactions · 94 comments</div>
+          <div style="margin-top:5px"><button class="btn btn-xs btn-secondary" onclick="writeTopic('Top paying tech skills in Melbourne 2025','linkedin')">Write our version</button></div>
+        </div>
+      </div>
+      <div class="comp-item">
+        <div class="comp-av">Ra</div>
+        <div>
+          <div class="comp-name">Randstad</div>
+          <div class="comp-post">"How to negotiate salary without burning bridges"</div>
+          <div class="comp-eng">1.2k reactions · 76 comments</div>
+          <div style="margin-top:5px"><button class="btn btn-xs btn-secondary" onclick="writeTopic('How to negotiate salary in the Australian market','linkedin')">Write our version</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      AI Content Writer
+      <div class="platform-tabs">
+        <button class="ptab active" onclick="setPlatform(this,'linkedin')">LinkedIn</button>
+        <button class="ptab" onclick="setPlatform(this,'email')">Email</button>
+        <button class="ptab" onclick="setPlatform(this,'jobad')">Job Ad</button>
+        <button class="ptab" onclick="setPlatform(this,'instagram')">Instagram</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <textarea class="writer-input" id="writer-prompt" placeholder="What do you want to write? e.g. 'Write a LinkedIn post about the skills gap in Australian tech hiring in 2025, positioning Good Moves as the expert recruiter who can help...'"></textarea>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-primary" id="write-btn" onclick="generateContent()">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Generate with AI
+        </button>
+        <button class="btn btn-secondary" onclick="copyOutput()">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+        <button class="btn btn-secondary" onclick="addOutputToPipeline()">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7-7 7 7"/></svg>
+          Add to Pipeline
+        </button>
+        <span id="writing-status" style="font-size:12px;color:var(--text-3)"></span>
+      </div>
+      <div class="writer-output" id="writer-output">Your AI-generated content will appear here. Click a trending topic above to pre-fill the prompt, or write your own brief.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ AI AGENTS ════════ -->
+<div id="page-aiagents" class="page">
+  <div class="page-header">
+    <div><div class="page-title">AI Agents</div><div class="page-sub">Automated AI workers for your agency</div></div>
+    <button class="btn btn-primary btn-sm" onclick="showNotif('Opening agent builder...','success')">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      New Agent
+    </button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div class="agent-card">
+      <div class="agent-header">
+        <div class="agent-icon" style="background:var(--accent-light);color:var(--accent)"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div>
+          <div class="agent-name">Candidate Intake Agent</div>
+          <div class="agent-desc">Automatically responds to new candidate enquiries 24/7. Collects CV, qualifies experience, and books intro calls.</div>
+        </div>
+      </div>
+      <div class="agent-footer">
+        <div class="agent-stat">Handled <strong>47</strong> conversations this month</div>
+        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-header">
+        <div class="agent-icon" style="background:var(--green-light);color:var(--green)"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg></div>
+        <div>
+          <div class="agent-name">Email Follow-up Agent</div>
+          <div class="agent-desc">Monitors your pipeline and sends personalised follow-up emails at the right time. Never miss a hot lead.</div>
+        </div>
+      </div>
+      <div class="agent-footer">
+        <div class="agent-stat">Sent <strong>234</strong> follow-ups this month</div>
+        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-header">
+        <div class="agent-icon" style="background:var(--purple-light);color:var(--purple)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <div>
+          <div class="agent-name">Content Publishing Agent</div>
+          <div class="agent-desc">Schedules and publishes approved content to LinkedIn, Instagram, and your job board automatically.</div>
+        </div>
+      </div>
+      <div class="agent-footer">
+        <div class="agent-stat">Published <strong>18</strong> posts this month</div>
+        <div class="toggle" onclick="this.classList.toggle('on')"></div>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-header">
+        <div class="agent-icon" style="background:var(--orange-light);color:var(--orange)"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div>
+          <div class="agent-name">Client Nurture Agent</div>
+          <div class="agent-desc">Keeps hiring managers warm with market updates, relevant job market data, and check-ins between placements.</div>
+        </div>
+      </div>
+      <div class="agent-footer">
+        <div class="agent-stat">Engaged <strong>31</strong> clients this month</div>
+        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ AUTOMATION ════════ -->
+<div id="page-automation" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Automation</div><div class="page-sub">Workflows that run while you sleep</div></div>
+    <button class="btn btn-primary btn-sm" onclick="showNotif('Opening workflow builder...','success')">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      New Workflow
+    </button>
+  </div>
+  <div class="stats-row stats-3 mb16">
+    <div class="stat-card"><div class="stat-label">Active Workflows</div><div class="stat-value">12</div><div class="stat-change"><span class="up">3 running now</span></div></div>
+    <div class="stat-card"><div class="stat-label">Triggered (30d)</div><div class="stat-value">2,847</div><div class="stat-change"><span class="up">↑ 24%</span></div></div>
+    <div class="stat-card"><div class="stat-label">Time Saved (est.)</div><div class="stat-value">41h</div><div class="stat-change"><span class="up">this month</span></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Workflows</div>
+    <div class="auto-item"><div class="auto-icon" style="background:var(--accent-light);color:var(--accent)"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg></div><div><div class="auto-name">New Candidate — Welcome Sequence</div><div class="auto-desc">Triggers on registration → 5-email welcome + CV request</div></div><div class="auto-stats">1,204<div class="auto-sub">enrolled</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="auto-item"><div class="auto-icon" style="background:var(--green-light);color:var(--green)"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/></svg></div><div><div class="auto-name">Lead Capture → CRM Push</div><div class="auto-desc">Website form → Creates contact + adds to pipeline + notifies team</div></div><div class="auto-stats">127<div class="auto-sub">this month</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="auto-item"><div class="auto-icon" style="background:var(--purple-light);color:var(--purple)"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div><div class="auto-name">90-Day Candidate Re-engagement</div><div class="auto-desc">Inactive 90 days → personalised re-engagement email sequence</div></div><div class="auto-stats">89<div class="auto-sub">enrolled</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+    <div class="auto-item"><div class="auto-icon" style="background:var(--orange-light);color:var(--orange)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><div class="auto-name">5-Star Review Request</div><div class="auto-desc">Successful placement → Review request via email + SMS</div></div><div class="auto-stats">42<div class="auto-sub">reviews earned</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="auto-item"><div class="auto-icon" style="background:var(--pink-light);color:var(--pink)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div><div class="auto-name">Monthly Market Update Email</div><div class="auto-desc">1st of month → AI-written market insights to all subscribers</div></div><div class="auto-stats">2,841<div class="auto-sub">subscribers</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="auto-item"><div class="auto-icon" style="background:var(--red-light);color:var(--red)"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div><div><div class="auto-name">Deal Stale Alert</div><div class="auto-desc">No activity 14 days → Slack notification to assigned recruiter</div></div><div class="auto-stats">7<div class="auto-sub">triggered today</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+  </div>
+</div>
+
+<!-- ════════ CONTENT PIPELINE ════════ -->
+<div id="page-pipeline" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Content Pipeline</div><div class="page-sub">Drag content from idea to published</div></div>
+    <button class="btn btn-primary btn-sm" onclick="openAddCard()">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      New Content
+    </button>
+  </div>
+  <div class="kanban" id="kanban-board"></div>
+</div>
+
+<!-- ════════ SOCIAL MEDIA ════════ -->
+<div id="page-social" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Social Media</div><div class="page-sub">LinkedIn · Instagram · Facebook · All in one place</div></div>
+    <button class="btn btn-primary btn-sm" onclick="showNotif('Opening post composer...','success')">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      Schedule Post
+    </button>
+  </div>
+  <div class="connect-banner">
+    <div class="connect-banner-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+    <div>
+      <h3>LinkedIn Connected</h3>
+      <p>Good Moves AU · 4,821 followers · Page analytics active</p>
+    </div>
+    <button class="btn btn-white btn-sm" style="margin-left:auto;background:rgba(255,255,255,.2);color:white;border:1px solid rgba(255,255,255,.3)" onclick="showNotif('Opening LinkedIn settings...','success')">Manage</button>
+  </div>
+  <div class="stats-row stats-3 mb16">
+    <div class="social-stat">
+      <div class="social-logo" style="background:#0A66C2"><svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:white"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+      <div class="social-platform">LinkedIn</div>
+      <div class="social-num">4,821</div><div class="social-lbl">Followers</div>
+      <div class="social-chg up">↑ 142 this month</div>
+    </div>
+    <div class="social-stat">
+      <div class="social-logo" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:white;fill:none;stroke-width:2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg></div>
+      <div class="social-platform">Instagram</div>
+      <div class="social-num">2,104</div><div class="social-lbl">Followers</div>
+      <div class="social-chg up">↑ 67 this month</div>
+    </div>
+    <div class="social-stat">
+      <div class="social-logo" style="background:#1877F2"><svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
+      <div class="social-platform">Facebook</div>
+      <div class="social-num">891</div><div class="social-lbl">Followers</div>
+      <div class="social-chg up">↑ 12 this month</div>
+    </div>
+  </div>
+  <div class="card mb16">
+    <div class="card-title">This Week's Schedule <button class="card-action" onclick="showNotif('Opening scheduler...','success')">+ Add Post</button></div>
+    <div class="sched-grid">
+      <div><div class="sched-day-h">Mon</div><div class="sched-post sched-li">LinkedIn: Hiring Trends</div></div>
+      <div><div class="sched-day-h">Tue</div><div class="sched-post sched-em">Email: Market Update</div></div>
+      <div><div class="sched-day-h">Wed</div><div class="sched-post sched-ig">IG: Team Spotlight</div></div>
+      <div><div class="sched-day-h">Thu</div><div class="sched-post sched-li">LinkedIn: Job of Week</div></div>
+      <div><div class="sched-day-h">Fri</div><div class="sched-post sched-li">LinkedIn: Tips</div><div class="sched-post sched-fb">FB: Reshare</div></div>
+      <div><div class="sched-day-h">Sat</div><div style="font-size:11px;color:var(--text-3);padding:4px">—</div></div>
+      <div><div class="sched-day-h">Sun</div><div style="font-size:11px;color:var(--text-3);padding:4px">—</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Top Performing Posts (30 days)</div>
+    <table class="table">
+      <tr><th>Post</th><th>Platform</th><th>Reach</th><th>Engagements</th><th>Leads</th></tr>
+      <tr><td>Salary Guide 2025 is live</td><td><span class="tag tag-blue">LinkedIn</span></td><td class="td-num">8,421</td><td class="td-num">342</td><td class="td-num" style="color:var(--green)">24</td></tr>
+      <tr><td>5 red flags in job descriptions</td><td><span class="tag tag-blue">LinkedIn</span></td><td class="td-num">6,102</td><td class="td-num">287</td><td class="td-num" style="color:var(--green)">12</td></tr>
+      <tr><td>Behind the scenes at Good Moves</td><td><span class="tag tag-purple">Instagram</span></td><td class="td-num">3,847</td><td class="td-num">201</td><td class="td-num" style="color:var(--green)">4</td></tr>
+      <tr><td>We're hiring! Senior Recruiter</td><td><span class="tag tag-blue">LinkedIn</span></td><td class="td-num">2,904</td><td class="td-num">156</td><td class="td-num" style="color:var(--green)">31</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ EMAIL & FLOWS ════════ -->
+<div id="page-email" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Email & Flows</div><div class="page-sub">Campaigns and automated sequences</div></div>
+    <button class="btn btn-primary btn-sm" onclick="showNotif('Opening email builder...','success')">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      New Campaign
+    </button>
+  </div>
+  <div class="stats-row stats-4 mb16">
+    <div class="stat-card"><div class="stat-label">Sent (30d)</div><div class="stat-value">4,821</div><div class="stat-change"><span class="up">↑ 12%</span></div></div>
+    <div class="stat-card"><div class="stat-label">Open Rate</div><div class="stat-value">34.2%</div><div class="stat-change"><span class="up">↑ 4.1pts</span></div></div>
+    <div class="stat-card"><div class="stat-label">Click Rate</div><div class="stat-value">8.7%</div><div class="stat-change"><span class="up">↑ 1.2pts</span></div></div>
+    <div class="stat-card"><div class="stat-label">Conversions</div><div class="stat-value">47</div><div class="stat-change"><span class="up">↑ 28%</span></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Active Flows & Campaigns</div>
+    <div class="email-card"><div class="email-icon-wrap" style="background:var(--accent-light);color:var(--accent)"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><div class="email-name">Candidate Welcome Sequence</div><div class="email-desc">5 emails · Triggers on registration · JobAdder synced</div></div><div class="email-stat"><div class="email-stat-n">1,204</div><div class="email-stat-l">enrolled</div></div><span class="status-pill pill-green">Active</span></div>
+    <div class="email-card"><div class="email-icon-wrap" style="background:var(--purple-light);color:var(--purple)"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div><div class="email-name">Client Nurture Sequence</div><div class="email-desc">8 emails · Triggered on new employer enquiry · 14-day cadence</div></div><div class="email-stat"><div class="email-stat-n">342</div><div class="email-stat-l">enrolled</div></div><span class="status-pill pill-green">Active</span></div>
+    <div class="email-card"><div class="email-icon-wrap" style="background:var(--orange-light);color:var(--orange)"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div><div class="email-name">Monthly Market Update</div><div class="email-desc">1 email · Sends 1st of month · 2,841 subscribers</div></div><div class="email-stat"><div class="email-stat-n">2,841</div><div class="email-stat-l">subscribers</div></div><span class="status-pill pill-green">Active</span></div>
+    <div class="email-card"><div class="email-icon-wrap" style="background:var(--red-light);color:var(--red)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><div class="email-name">Re-engagement Campaign</div><div class="email-desc">3 emails · 90-day inactive candidates</div></div><div class="email-stat"><div class="email-stat-n">89</div><div class="email-stat-l">enrolled</div></div><span class="status-pill pill-orange">Paused</span></div>
+    <div class="email-card"><div class="email-icon-wrap" style="background:var(--green-light);color:var(--green)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><div class="email-name">AI Weekly Jobs Digest</div><div class="email-desc">AI-personalised by candidate skills · Draft in progress</div></div><div class="email-stat"><div class="email-stat-n">—</div><div class="email-stat-l">not sent</div></div><span class="status-pill pill-draft">Draft</span></div>
+  </div>
+</div>
+
+<!-- ════════ WEBSITE ════════ -->
+<div id="page-website" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Website Analytics</div></div>
+  </div>
+  <div class="connect-banner ga4">
+    <div class="connect-banner-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+    <div><h3>Google Analytics 4 Connected</h3><p>Showing real-time data from goodmoves.com.au</p></div>
+    <button class="btn btn-sm" style="margin-left:auto;background:rgba(255,255,255,.2);color:white;border:1px solid rgba(255,255,255,.3)" onclick="showNotif('Opening GA4 settings...','success')">Manage</button>
+  </div>
+  <div class="stats-row stats-4 mb16">
+    <div class="stat-card"><div class="stat-label">Sessions (7D)</div><div class="stat-value">8,847</div><div class="stat-change"><span class="up">↑ 18%</span></div></div>
+    <div class="stat-card"><div class="stat-label">New Visitors</div><div class="stat-value">61%</div><div class="stat-change"><span class="up">↑ 3pts</span></div></div>
+    <div class="stat-card"><div class="stat-label">Leads Captured</div><div class="stat-value">127</div><div class="stat-change"><span class="up">↑ 34%</span></div></div>
+    <div class="stat-card"><div class="stat-label">Avg Session</div><div class="stat-value">2m 41s</div><div class="stat-change"><span class="up">↑ 14s</span></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Top Pages <button class="card-action">View all →</button></div>
+    <table class="table">
+      <tr><th>Page</th><th>Sessions</th><th>Bounce</th><th>Avg Time</th><th>Leads</th></tr>
+      <tr><td>/jobs/marketing-manager-melbourne</td><td class="td-num">1,247</td><td>38%</td><td>3m 12s</td><td class="td-num" style="color:var(--green)">24</td></tr>
+      <tr><td>/salary-guide-2025</td><td class="td-num">986</td><td>22%</td><td>4m 41s</td><td class="td-num" style="color:var(--green)">41</td></tr>
+      <tr><td>/jobs/senior-recruiter-sydney</td><td class="td-num">743</td><td>45%</td><td>2m 08s</td><td class="td-num" style="color:var(--green)">12</td></tr>
+      <tr><td>/about-us</td><td class="td-num">612</td><td>55%</td><td>1m 55s</td><td class="td-num" style="color:var(--green)">8</td></tr>
+      <tr><td>/contact</td><td class="td-num">489</td><td>18%</td><td>2m 30s</td><td class="td-num" style="color:var(--green)">37</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ CONTACTS ════════ -->
+<div id="page-contacts" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Contacts</div><div class="page-sub">Candidates and clients in one CRM</div></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-secondary btn-sm" onclick="showNotif('Importing from JobAdder...','success')">Import from ATS</button>
+      <button class="btn btn-primary btn-sm" onclick="showNotif('Opening contact form...','success')">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        New Contact
+      </button>
+    </div>
+  </div>
+  <div class="stats-row stats-4 mb16">
+    <div class="stat-card"><div class="stat-label">Total Contacts</div><div class="stat-value">3,847</div><div class="stat-change"><span class="up">↑ 127 this month</span></div></div>
+    <div class="stat-card"><div class="stat-label">Candidates</div><div class="stat-value">3,104</div><div class="stat-change">80.7% of total</div></div>
+    <div class="stat-card"><div class="stat-label">Clients / Employers</div><div class="stat-value">743</div><div class="stat-change">19.3% of total</div></div>
+    <div class="stat-card"><div class="stat-label">Active This Month</div><div class="stat-value">412</div><div class="stat-change"><span class="up">↑ 18%</span></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">All Contacts <div style="display:flex;gap:6px"><button class="ptab active" style="padding:4px 10px;font-size:11.5px">All</button><button class="ptab" style="padding:4px 10px;font-size:11.5px">Candidates</button><button class="ptab" style="padding:4px 10px;font-size:11.5px">Clients</button></div></div>
+    <div class="contact-row"><div class="contact-av" style="background:#2348FF">JK</div><div class="contact-name">James Kim</div><div class="contact-role">Senior PM — looking for Product roles</div><div class="contact-status"><span class="tag tag-green">Hot Lead</span></div><div class="contact-date">Today</div></div>
+    <div class="contact-row"><div class="contact-av" style="background:#10B981">SR</div><div class="contact-name">Sarah Reynolds</div><div class="contact-role">Marketing Manager — open to work</div><div class="contact-status"><span class="tag tag-blue">Qualified</span></div><div class="contact-date">Today</div></div>
+    <div class="contact-row"><div class="contact-av" style="background:#8B5CF6">TC</div><div class="contact-name">TechCorp HR (Lisa Wang)</div><div class="contact-role">Client — hiring 3 roles</div><div class="contact-status"><span class="tag tag-orange">In Progress</span></div><div class="contact-date">Yesterday</div></div>
+    <div class="contact-row"><div class="contact-av" style="background:#EC4899">AL</div><div class="contact-name">Ava Liu</div><div class="contact-role">UX Designer — portfolio reviewed</div><div class="contact-status"><span class="tag tag-purple">Reviewing</span></div><div class="contact-date">Mar 8</div></div>
+    <div class="contact-row"><div class="contact-av" style="background:#F59E0B">BW</div><div class="contact-name">Ben Wright</div><div class="contact-role">Data Analyst — in interview stage</div><div class="contact-status"><span class="tag tag-blue">Active</span></div><div class="contact-date">Mar 7</div></div>
+    <div class="contact-row"><div class="contact-av" style="background:#EF4444">MP</div><div class="contact-name">Michael Park</div><div class="contact-role">DevOps Engineer — placed successfully</div><div class="contact-status"><span class="tag tag-green">Placed</span></div><div class="contact-date">Mar 5</div></div>
+  </div>
+</div>
+
+<!-- ════════ REPUTATION ════════ -->
+<div id="page-reputation" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Reputation</div><div class="page-sub">Reviews and brand sentiment</div></div>
+    <button class="btn btn-primary btn-sm" onclick="showNotif('Sending review request...','success')">Request Review</button>
+  </div>
+  <div class="stats-row stats-4 mb16">
+    <div class="stat-card"><div class="stat-label">Avg Rating</div><div class="stat-value">4.8 ★</div><div class="stat-change"><span class="up">↑ 0.2 this month</span></div></div>
+    <div class="stat-card"><div class="stat-label">Total Reviews</div><div class="stat-value">127</div><div class="stat-change"><span class="up">↑ 14 this month</span></div></div>
+    <div class="stat-card"><div class="stat-label">Google Reviews</div><div class="stat-value">4.9 ★</div><div class="stat-change">47 reviews</div></div>
+    <div class="stat-card"><div class="stat-label">Response Rate</div><div class="stat-value">94%</div><div class="stat-change"><span class="up">Within 24h</span></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Recent Reviews</div>
+    <div class="review-item"><div class="review-av" style="background:#2348FF">MH</div><div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;font-weight:700">Mark Hughes</span><span class="review-stars">★★★★★</span><span style="font-size:11px;color:var(--text-3)">Google · 2 days ago</span></div><div class="review-text">Emma and the team at Good Moves were incredible. They truly understood what I was looking for and found me a role that exceeded my expectations. Highly recommend.</div></div></div>
+    <div class="review-item"><div class="review-av" style="background:#10B981">CJ</div><div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;font-weight:700">Claire Johnson</span><span class="review-stars">★★★★★</span><span style="font-size:11px;color:var(--text-3)">Google · 1 week ago</span></div><div class="review-text">Best recruitment experience I've had. Fast, communicative, and they actually listened. Landed a Senior Marketing Manager role within 3 weeks.</div></div></div>
+    <div class="review-item"><div class="review-av" style="background:#8B5CF6">AK</div><div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;font-weight:700">Alex Kim (TechCorp)</span><span class="review-stars">★★★★☆</span><span style="font-size:11px;color:var(--text-3)">Clutch · 2 weeks ago</span></div><div class="review-text">Good Moves delivered exactly what we needed — 2 senior hires in 6 weeks. Very responsive and professional throughout. Will use again.</div></div></div>
+  </div>
+</div>
+
+<!-- ════════ REPORTING ════════ -->
+<div id="page-reporting" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Reporting</div><div class="page-sub">Full attribution · ROI · Campaign performance</div></div>
+    <button class="btn btn-secondary btn-sm" onclick="showNotif('Exporting report...','success')">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+      Export PDF
+    </button>
+  </div>
+  <div class="stats-row stats-5 mb16">
+    <div class="stat-card"><div class="stat-label">Total Revenue (30d)</div><div class="stat-value">$47k</div><div class="stat-change"><span class="up">↑ 34%</span></div></div>
+    <div class="stat-card"><div class="stat-label">Placements</div><div class="stat-value">23</div><div class="stat-change"><span class="up">↑ 28%</span></div></div>
+    <div class="stat-card"><div class="stat-label">Pipeline Value</div><div class="stat-value">$184k</div><div class="stat-change"><span class="up">↑ 12%</span></div></div>
+    <div class="stat-card"><div class="stat-label">Cost Per Lead</div><div class="stat-value">$18.40</div><div class="stat-change"><span class="down">↓ $4.20</span> good</div></div>
+    <div class="stat-card"><div class="stat-label">Marketing ROI</div><div class="stat-value">847%</div><div class="stat-change"><span class="up">↑ 120pts</span></div></div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Leads by Channel (30 days)</div>
+      <div class="report-chart">
+        <div class="bar-item"><div class="bar" style="height:85%"></div><div class="bar-label">LinkedIn</div><div class="bar-val">54</div></div>
+        <div class="bar-item"><div class="bar" style="height:52%;background:var(--green)"></div><div class="bar-label">Organic</div><div class="bar-val">33</div></div>
+        <div class="bar-item"><div class="bar" style="height:34%;background:var(--orange)"></div><div class="bar-label">Email</div><div class="bar-val">22</div></div>
+        <div class="bar-item"><div class="bar" style="height:22%;background:var(--purple)"></div><div class="bar-label">Referral</div><div class="bar-val">14</div></div>
+        <div class="bar-item"><div class="bar" style="height:12%;background:var(--pink)"></div><div class="bar-label">Direct</div><div class="bar-val">8</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Revenue Attribution</div>
+      <table class="table">
+        <tr><th>Source</th><th>Leads</th><th>Placed</th><th>Revenue</th></tr>
+        <tr><td>LinkedIn Organic</td><td>54</td><td>8</td><td class="td-num" style="color:var(--green)">$18.4k</td></tr>
+        <tr><td>Website SEO</td><td>33</td><td>7</td><td class="td-num" style="color:var(--green)">$16.1k</td></tr>
+        <tr><td>Email Campaigns</td><td>22</td><td>5</td><td class="td-num" style="color:var(--green)">$11.5k</td></tr>
+        <tr><td>Referrals</td><td>14</td><td>3</td><td class="td-num" style="color:var(--green)">$6.9k</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ CALENDARS ════════ -->
+<div id="page-calendars" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Calendars</div><div class="page-sub">Booking links · Interview scheduling · Events</div></div>
+    <button class="btn btn-primary btn-sm" onclick="showNotif('Creating booking link...','success')">+ Booking Link</button>
+  </div>
+  <div class="stats-row stats-3 mb16">
+    <div class="stat-card"><div class="stat-label">Meetings (This Month)</div><div class="stat-value">47</div><div class="stat-change"><span class="up">↑ 12 vs last month</span></div></div>
+    <div class="stat-card"><div class="stat-label">Booked via Link</div><div class="stat-value">34</div><div class="stat-change">72% of total meetings</div></div>
+    <div class="stat-card"><div class="stat-label">No-show Rate</div><div class="stat-value">4%</div><div class="stat-change"><span class="down">↓ 2pts</span> improved</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">March 2025</div>
+    <div class="cal-grid">
+      <div class="cal-day-h">Mon</div><div class="cal-day-h">Tue</div><div class="cal-day-h">Wed</div><div class="cal-day-h">Thu</div><div class="cal-day-h">Fri</div><div class="cal-day-h">Sat</div><div class="cal-day-h">Sun</div>
+      <div class="cal-day"><div class="cal-day-num">3</div><div class="cal-event sched-li">Candidate Intake</div></div>
+      <div class="cal-day"><div class="cal-day-num">4</div><div class="cal-event sched-em">Client Call: TechCorp</div></div>
+      <div class="cal-day"><div class="cal-day-num">5</div><div class="cal-day-num">5</div></div>
+      <div class="cal-day"><div class="cal-day-num">6</div><div class="cal-event sched-li">Interviews x3</div></div>
+      <div class="cal-day"><div class="cal-day-num">7</div><div class="cal-event sched-ig">Team Debrief</div></div>
+      <div class="cal-day"><div class="cal-day-num">8</div></div>
+      <div class="cal-day"><div class="cal-day-num">9</div></div>
+      <div class="cal-day today"><div class="cal-day-num">10</div><div class="cal-event sched-li">James Kim — Intro</div><div class="cal-event sched-em">Client Follow-up</div></div>
+      <div class="cal-day"><div class="cal-day-num">11</div></div>
+      <div class="cal-day"><div class="cal-day-num">12</div><div class="cal-event sched-li">Shortlist Review</div></div>
+      <div class="cal-day"><div class="cal-day-num">13</div><div class="cal-event sched-li">Final Interviews x2</div></div>
+      <div class="cal-day"><div class="cal-day-num">14</div><div class="cal-event sched-em">Offer Prep: Ben W.</div></div>
+      <div class="cal-day"><div class="cal-day-num">15</div></div>
+      <div class="cal-day"><div class="cal-day-num">16</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ SITES & PAGES ════════ -->
+<div id="page-sites" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Sites & Pages</div><div class="page-sub">Your web presence managed from one place</div></div>
+    <button class="btn btn-primary btn-sm" onclick="showNotif('Opening page builder...','success')">+ New Page</button>
+  </div>
+  <div class="card">
+    <div class="card-title">goodmoves.com.au — Live Pages</div>
+    <div class="site-page"><div class="site-thumb"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><div><div class="site-url">/ (Homepage)</div><div class="site-meta">Published · Last edited Mar 9</div></div><div style="flex:1"></div><div class="site-stats"><div class="site-stat-n">4,821</div><div class="site-stat-l">Sessions (30d)</div></div></div>
+    <div class="site-page"><div class="site-thumb"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><div><div class="site-url">/jobs</div><div class="site-meta">Published · 47 active listings</div></div><div style="flex:1"></div><div class="site-stats"><div class="site-stat-n">2,847</div><div class="site-stat-l">Sessions (30d)</div></div></div>
+    <div class="site-page"><div class="site-thumb"><svg viewBox="0 0 24 24"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/></svg></div><div><div class="site-url">/salary-guide-2025</div><div class="site-meta">Published · Top lead source · Updated Feb 2025</div></div><div style="flex:1"></div><div class="site-stats"><div class="site-stat-n">986</div><div class="site-stat-l">Sessions (30d)</div></div></div>
+    <div class="site-page"><div class="site-thumb"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="site-url">/about-us</div><div class="site-meta">Published · Last edited Jan 2025</div></div><div style="flex:1"></div><div class="site-stats"><div class="site-stat-n">612</div><div class="site-stat-l">Sessions (30d)</div></div></div>
+    <div class="site-page"><div class="site-thumb"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/></svg></div><div><div class="site-url">/contact</div><div class="site-meta">Published · Highest conversion page</div></div><div style="flex:1"></div><div class="site-stats"><div class="site-stat-n">489</div><div class="site-stat-l">Sessions (30d)</div></div></div>
+  </div>
+</div>
+
+<!-- ════════ MEDIA STORAGE ════════ -->
+<div id="page-media" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Media Storage</div><div class="page-sub">Images, videos, and documents</div></div>
+    <button class="btn btn-primary btn-sm" onclick="showNotif('Opening upload dialog...','success')">Upload Files</button>
+  </div>
+  <div class="stats-row stats-3 mb16">
+    <div class="stat-card"><div class="stat-label">Storage Used</div><div class="stat-value">2.4 GB</div><div class="stat-change">of 20 GB limit</div></div>
+    <div class="stat-card"><div class="stat-label">Total Files</div><div class="stat-value">847</div><div class="stat-change"><span class="up">↑ 34 this month</span></div></div>
+    <div class="stat-card"><div class="stat-label">Images</div><div class="stat-value">612</div><div class="stat-change">72% of total</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Recent Files</div>
+    <table class="table">
+      <tr><th>Name</th><th>Type</th><th>Size</th><th>Used in</th><th>Uploaded</th></tr>
+      <tr><td>salary-guide-cover.png</td><td><span class="tag tag-blue">Image</span></td><td>340 KB</td><td>Salary Guide page</td><td>Mar 8</td></tr>
+      <tr><td>good-moves-team.jpg</td><td><span class="tag tag-blue">Image</span></td><td>1.2 MB</td><td>About page</td><td>Mar 6</td></tr>
+      <tr><td>linkedin-post-banner.png</td><td><span class="tag tag-blue">Image</span></td><td>180 KB</td><td>Social posts</td><td>Mar 4</td></tr>
+      <tr><td>candidate-guide-2025.pdf</td><td><span class="tag tag-orange">PDF</span></td><td>2.8 MB</td><td>Email campaign</td><td>Feb 28</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ MARKETING (sub-menu) ════════ -->
+<div id="page-marketing" class="page">
+  <div class="page-header">
+    <div><div class="page-title">Marketing</div><div class="page-sub">Ads, social planning, and campaign tools</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+    <div class="card" style="cursor:pointer" onclick="showNotif('Opening Social Planner...','success')"><div style="font-size:22px;margin-bottom:10px"><svg style="width:28px;height:28px;stroke:var(--accent);fill:none;stroke-width:1.8" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></div><div style="font-size:14px;font-weight:700;margin-bottom:4px">Social Planner</div><div style="font-size:12px;color:var(--text-2)">Schedule and publish to all social channels</div></div>
+    <div class="card" style="cursor:pointer" onclick="showNotif('Opening Email builder...','success')"><div style="font-size:22px;margin-bottom:10px"><svg style="width:28px;height:28px;stroke:var(--green);fill:none;stroke-width:1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg></div><div style="font-size:14px;font-weight:700;margin-bottom:4px">Email Campaigns</div><div style="font-size:12px;color:var(--text-2)">Design and send broadcast emails</div></div>
+    <div class="card" style="cursor:pointer" onclick="showNotif('Opening Ad Manager...','success')"><div style="font-size:22px;margin-bottom:10px"><svg style="width:28px;height:28px;stroke:var(--purple);fill:none;stroke-width:1.8" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div style="font-size:14px;font-weight:700;margin-bottom:4px">Ad Manager</div><div style="font-size:12px;color:var(--text-2)">Google, Meta and LinkedIn ads in one place</div></div>
+    <div class="card" style="cursor:pointer" onclick="showNotif('Opening Snippets...','success')"><div style="margin-bottom:10px"><svg style="width:28px;height:28px;stroke:var(--orange);fill:none;stroke-width:1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div><div style="font-size:14px;font-weight:700;margin-bottom:4px">Snippets</div><div style="font-size:12px;color:var(--text-2)">Reusable text and content templates</div></div>
+    <div class="card" style="cursor:pointer" onclick="showNotif('Opening Countdown Timers...','success')"><div style="margin-bottom:10px"><svg style="width:28px;height:28px;stroke:var(--red);fill:none;stroke-width:1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div style="font-size:14px;font-weight:700;margin-bottom:4px">Countdown Timers</div><div style="font-size:12px;color:var(--text-2)">Add urgency to campaigns and landing pages</div></div>
+    <div class="card" style="cursor:pointer" onclick="showNotif('Opening Affiliate Manager...','success')"><div style="margin-bottom:10px"><svg style="width:28px;height:28px;stroke:var(--pink);fill:none;stroke-width:1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div style="font-size:14px;font-weight:700;margin-bottom:4px">Affiliate Manager</div><div style="font-size:12px;color:var(--text-2)">Referral program management and payouts</div></div>
+  </div>
+</div>
+
+<!-- ════════ SETTINGS ════════ -->
+<div id="page-settings" class="page">
+  <div class="page-header"><div class="page-title">Settings</div></div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">AI Configuration</div>
+      <div class="form-g">
+        <label class="form-l">Anthropic API Key</label>
+        <div style="display:flex;gap:8px">
+          <input class="form-i" type="password" id="settings-api-key" placeholder="sk-ant-api03-..." style="flex:1"/>
+          <button class="btn btn-primary btn-sm" onclick="saveApiKeyFromSettings()">Save</button>
+        </div>
+        <div style="font-size:11px;color:var(--text-3);margin-top:4px">Get your key at console.anthropic.com · First $5 free</div>
+      </div>
+      <div class="form-g">
+        <label class="form-l">Agency Name</label>
+        <input class="form-i" value="Good Moves AU"/>
+      </div>
+      <div class="form-g">
+        <label class="form-l">Niche / Market</label>
+        <input class="form-i" value="Marketing & Creative Recruitment, Melbourne AU"/>
+      </div>
+      <div class="form-g">
+        <label class="form-l">Brand Voice</label>
+        <input class="form-i" value="Professional but warm, insight-led, no corporate jargon"/>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="showNotif('Settings saved!','success')">Save Settings</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Integrations</div>
+      <div class="int-item"><div class="int-logo" style="color:#0A66C2;font-weight:700;font-size:12px">in</div><div><div class="int-name">LinkedIn</div><div class="int-desc">Good Moves AU · Connected</div></div><span class="status-pill pill-green" style="margin-left:auto">Live</span></div>
+      <div class="int-item"><div class="int-logo" style="color:#FF6D00;font-size:11px;font-weight:700">GA4</div><div><div class="int-name">Google Analytics 4</div><div class="int-desc">goodmoves.com.au · Tracking active</div></div><span class="status-pill pill-green" style="margin-left:auto">Live</span></div>
+      <div class="int-item"><div class="int-logo" style="color:#10B981;font-size:11px;font-weight:700">JA</div><div><div class="int-name">JobAdder</div><div class="int-desc">Syncing candidates and jobs</div></div><span class="status-pill pill-green" style="margin-left:auto">Live</span></div>
+      <div class="int-item"><div class="int-logo" style="color:var(--text-3);font-size:11px;font-weight:700">BH</div><div><div class="int-name">Bullhorn ATS</div><div class="int-desc">Not connected</div></div><button class="btn btn-secondary btn-xs" style="margin-left:auto" onclick="showNotif('Opening Bullhorn setup...','success')">Connect</button></div>
+      <div class="int-item"><div class="int-logo" style="color:var(--text-3);font-size:11px;font-weight:700">VC</div><div><div class="int-name">Vincere</div><div class="int-desc">Not connected</div></div><button class="btn btn-secondary btn-xs" style="margin-left:auto" onclick="showNotif('Opening Vincere setup...','success')">Connect</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ MODALS ════════ -->
+<div class="overlay" id="modal-add-card">
+  <div class="modal">
+    <div class="modal-h"><div class="modal-title">New Content</div><button class="modal-close" onclick="closeModal()">×</button></div>
+    <div class="form-g"><label class="form-l">Title</label><input class="form-i" id="new-card-title" placeholder="e.g. 5 signs it's time to change jobs"/></div>
+    <div class="form-g"><label class="form-l">Platform</label><select class="form-i" id="new-card-platform"><option value="linkedin">LinkedIn</option><option value="email">Email</option><option value="instagram">Instagram</option><option value="blog">Blog Post</option><option value="jobad">Job Ad</option></select></div>
+    <div class="form-g"><label class="form-l">Notes / Brief</label><textarea class="form-i" id="new-card-notes" style="min-height:70px" placeholder="Context or brief..."></textarea></div>
+    <div class="modal-f"><button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="addCardFromModal()">Add to Pipeline</button></div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ── STATE ──
+let apiKey = localStorage.getItem('magnet_api_key') || '';
+let currentPlatform = 'linkedin';
+let dragCard = null;
+
+let pipeline = JSON.parse(localStorage.getItem('magnet_pipeline') || 'null') || {
+  ideas:[
+    {id:1,title:'How to write a standout CV in 2025',platform:'blog',notes:'Target: candidates'},
+    {id:2,title:'Why Melbourne is the best city for tech jobs',platform:'linkedin',notes:'Trending topic'},
+    {id:3,title:'Client spotlight: TechCorp hiring surge',platform:'email',notes:'Case study format'},
+  ],
+  writing:[
+    {id:4,title:'Salary Guide 2025 LinkedIn campaign',platform:'linkedin',notes:'3-post series'},
+    {id:5,title:'Candidate welcome email rewrite',platform:'email',notes:'AI-assisted'},
+  ],
+  review:[{id:6,title:'5 red flags in job descriptions',platform:'linkedin',notes:'Ready to review'}],
+  scheduled:[{id:7,title:'Hiring Trends 2025 — Monday post',platform:'linkedin',notes:'Scheduled Mon 9am'}],
+  published:[
+    {id:8,title:'Good Moves is hiring! Senior Recruiter',platform:'linkedin',notes:'8.2k reach'},
+    {id:9,title:'March market update email',platform:'email',notes:'34% open rate'},
+  ]
+};
+
+const colMeta = {
+  ideas:{label:'Ideas',color:''},
+  writing:{label:'Writing',color:'var(--accent)'},
+  review:{label:'Review',color:'var(--orange)'},
+  scheduled:{label:'Scheduled',color:'var(--purple)'},
+  published:{label:'Published',color:'var(--green)'}
+};
+
+const tagStyle = {
+  linkedin:'tag-blue',email:'tag-orange',instagram:'tag-purple',blog:'tag-green',jobad:'tag-gray'
+};
+const tagLabel = {linkedin:'LinkedIn',email:'Email',instagram:'Instagram',blog:'Blog',jobad:'Job Ad'};
+
+// ── NAV ──
+const pageNames = {
+  dashboard:'Dashboard',conversations:'Conversations',aistudio:'AI Studio',aiagents:'AI Agents',
+  marketing:'Marketing',automation:'Automation',pipeline:'Content Pipeline',social:'Social Media',
+  email:'Email & Flows',website:'Website Analytics',contacts:'Contacts',reputation:'Reputation',
+  reporting:'Reporting',calendars:'Calendars',sites:'Sites & Pages',media:'Media Storage',
+  settings:'Settings'
+};
+
+document.querySelectorAll('.nav-item[data-page]').forEach(item=>{
+  item.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    item.classList.add('active');
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    const page=item.dataset.page;
+    document.getElementById('page-'+page)?.classList.add('active');
+    document.getElementById('tb-title').textContent=pageNames[page]||page;
+    if(page==='pipeline')renderKanban();
+    if(page==='aistudio')checkApiSetup();
+  });
+});
+
+// ── API KEY ──
+function checkApiSetup(){
+  document.getElementById('api-setup-section').style.display=apiKey?'none':'block';
+}
+function saveApiKey(){
+  const v=document.getElementById('api-key-input').value.trim();
+  if(!v.startsWith('sk-')){showNotif('Please enter a valid API key (starts with sk-)','error');return;}
+  apiKey=v;localStorage.setItem('magnet_api_key',apiKey);
+  document.getElementById('api-setup-section').style.display='none';
+  showNotif('API key saved — AI Studio is live!','success');
+}
+function saveApiKeyFromSettings(){
+  const v=document.getElementById('settings-api-key').value.trim();
+  if(!v.startsWith('sk-')){showNotif('Please enter a valid key','error');return;}
+  apiKey=v;localStorage.setItem('magnet_api_key',apiKey);showNotif('Saved!','success');
+}
+function useDemoMode(){
+  apiKey='demo';
+  document.getElementById('api-setup-section').style.display='none';
+  showNotif('Demo mode — AI returns sample content','success');
+}
+
+// ── AI WRITER ──
+function setPlatform(btn,plat){
+  currentPlatform=plat;
+  document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function writeTopic(topic,plat){
+  const prompt=`Write a compelling ${plat==='linkedin'?'LinkedIn post':plat} for a recruitment agency called Good Moves AU about: ${topic}.\n\nGood Moves specialises in marketing and creative recruitment in Melbourne. Tone: professional but warm, insight-led, no corporate jargon. Include a clear call to action.`;
+  document.getElementById('writer-prompt').value=prompt;
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelector('[data-page="aistudio"]').classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-aistudio').classList.add('active');
+  document.getElementById('tb-title').textContent='AI Studio';
+  setTimeout(()=>generateContent(),200);
+}
+async function generateContent(){
+  const prompt=document.getElementById('writer-prompt').value.trim();
+  if(!prompt){showNotif('Enter a prompt first','error');return;}
+  const btn=document.getElementById('write-btn');
+  const status=document.getElementById('writing-status');
+  const output=document.getElementById('writer-output');
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Writing...';
+  status.textContent='';output.textContent='';
+  if(apiKey==='demo'||!apiKey){
+    await new Promise(r=>setTimeout(r,1400));
+    typeWriter(output,getDemoContent(currentPlatform));
+    btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Generate with AI';
+    status.textContent='Generated in demo mode';
+    return;
+  }
+  try{
+    const sys=`You are an expert recruitment marketing copywriter for Good Moves AU, a Melbourne-based marketing and creative recruitment agency. Write content that is professional but warm, insight-led, and avoids corporate jargon. Position Good Moves as genuine experts.\n\nFor LinkedIn posts: 150-250 words, generous line breaks, 2-3 relevant emojis, clear CTA.\nFor emails: include subject line, 200-300 words, personalised tone.\nFor job ads: benefit-led, structured, 300-400 words.\nFor Instagram: punchy, 80-120 words, 5-8 hashtags.`;
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:[{role:'user',content:prompt}]})});
+    if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'API error');}
+    const data=await res.json();
+    typeWriter(output,data.content[0].text);
+    status.textContent=`Generated · ~${data.usage?.output_tokens||200} tokens`;
+  }catch(e){
+    output.textContent='Error: '+e.message+'\n\nCheck your API key in Settings, or use Demo Mode.';
+    showNotif('Error: '+e.message,'error');
+  }
+  btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Generate with AI';
+}
+function typeWriter(el,text){
+  el.textContent='';let i=0;
+  const t=setInterval(()=>{el.textContent+=text[i];i++;if(i>=text.length)clearInterval(t);},11);
+}
+function getDemoContent(plat){
+  if(plat==='email') return `Subject: The one thing Melbourne employers are telling us right now\n\nHi [First Name],\n\nWe've had 40+ conversations with hiring managers this month, and one theme keeps coming up:\n\nThey're not just looking at CVs anymore. They're hiring for impact.\n\n"What changed because of you?" — that's the question behind every interview right now.\n\nIf you're exploring your next move, your job isn't to list responsibilities. It's to prove outcomes.\n\nThis week: update your LinkedIn with one campaign, project, or initiative you drove — and add the result.\n\nTakes 20 minutes. Could make all the difference.\n\nAs always, we're here when you're ready.\n\nEmma & the Good Moves team`;
+  if(plat==='jobad') return `Senior Digital Marketing Manager — Melbourne CBD\n\nGood Moves is partnering with a fast-growing Melbourne scale-up to find their next senior marketing hire.\n\nThis is for someone who's built things, not just managed them.\n\nThe role:\n• Own the full digital strategy — paid, SEO, content, and email\n• Lead a team of 3\n• Report directly to the CMO\n• Drive pipeline, not just impressions\n\nWhat you bring:\n• 6+ years in B2B digital marketing\n• Metrics-first mindset — you know your CAC from your LTV\n• Proven results you can point to\n\nThe package: $130k–$150k base + genuine equity upside\n\nApply or reach out to emma@goodmoves.com.au — we move fast.`;
+  if(plat==='instagram') return `The candidates getting hired in 2025 aren't the most qualified.\n\nThey're the most clearly communicated.\n\n"I managed email campaigns" doesn't land.\n\n"I grew open rates from 18% to 34% in 90 days" does.\n\nKnow the difference. Own your story.\n\n#GoodMoves #MelbourneJobs #MarketingCareers #Recruitment #CareerAdvice #JobSearch2025 #MelbourneMarketing`;
+  return `The skills gap in Australian tech hiring isn't what you think.\n\nWe speak to hiring managers every day. The real conversation isn't about hard skills anymore.\n\nIt's about this:\n\nCan you learn fast?\nCan you communicate clearly?\nCan you make decisions with incomplete information?\n\nEvery senior role we fill right now comes down to these three things.\n\nThe candidates who get offers aren't always the most technical. They're the ones who can articulate their thinking under pressure.\n\nIf you're hiring — build your interview process around these.\nIf you're job hunting — make sure your story answers them.\n\nAt Good Moves, we help marketing and creative professionals find roles where their full capability is actually valued.\n\nWhat's been your experience with skills gaps in hiring? I'd love to hear in the comments.\n\n#GoodMoves #MelbourneJobs #TechHiring #SkillsGap #Recruitment`;
+}
+function copyOutput(){
+  const t=document.getElementById('writer-output').textContent;
+  if(!t||t.includes('will appear'))return showNotif('Generate content first','error');
+  navigator.clipboard.writeText(t).then(()=>showNotif('Copied!','success'));
+}
+function addOutputToPipeline(){
+  const t=document.getElementById('writer-output').textContent;
+  if(!t||t.includes('will appear'))return showNotif('Generate content first','error');
+  const title=t.substring(0,55).replace(/\n/g,' ')+'...';
+  addCard('writing',{id:Date.now(),title,platform:currentPlatform,notes:'AI-generated'});
+  showNotif('Added to Content Pipeline!','success');
+}
+
+// ── KANBAN ──
+function renderKanban(){
+  const board=document.getElementById('kanban-board');
+  board.innerHTML='';
+  Object.keys(colMeta).forEach(col=>{
+    const meta=colMeta[col];
+    const cards=pipeline[col]||[];
+    const el=document.createElement('div');
+    el.className='k-col';
+    el.dataset.col=col;
+    el.innerHTML=`
+      <div class="k-header">
+        <span>${meta.label}</span>
+        <span class="k-count">${cards.length}</span>
+      </div>
+      <div class="k-cards" data-col="${col}">
+        ${cards.map(c=>renderCard(c,col)).join('')}
+        <div class="k-drop" data-col="${col}">Drop here</div>
+      </div>
+      <button class="k-add" onclick="openAddCard('${col}')">+ Add</button>`;
+    board.appendChild(el);
+  });
+  board.querySelectorAll('.k-card').forEach(card=>{
+    card.addEventListener('dragstart',e=>{
+      dragCard={id:parseInt(card.dataset.id),fromCol:card.dataset.col};
+      card.classList.add('dragging');
+    });
+    card.addEventListener('dragend',()=>card.classList.remove('dragging'));
+  });
+  board.querySelectorAll('.k-drop').forEach(zone=>{
+    zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('over');});
+    zone.addEventListener('dragleave',()=>zone.classList.remove('over'));
+    zone.addEventListener('drop',e=>{
+      e.preventDefault();zone.classList.remove('over');
+      if(!dragCard)return;
+      const toCol=zone.dataset.col;
+      if(toCol!==dragCard.fromCol){
+        const from=pipeline[dragCard.fromCol];
+        const idx=from.findIndex(c=>c.id===dragCard.id);
+        if(idx!==-1){const[moved]=from.splice(idx,1);pipeline[toCol].push(moved);savePipeline();renderKanban();showNotif(`Moved to ${colMeta[toCol].label}!`,'success');}
+      }
+      dragCard=null;
+    });
+  });
+}
+function renderCard(card,col){
+  const tc=tagStyle[card.platform]||'tag-gray';
+  const tl=tagLabel[card.platform]||card.platform;
+  return `<div class="k-card" draggable="true" data-id="${card.id}" data-col="${col}">
+    <div class="k-card-title">${card.title}</div>
+    <div class="k-card-meta">
+      <span class="tag ${tc}">${tl}</span>
+      ${card.notes?`<span style="font-size:11px;color:var(--text-3)">${card.notes}</span>`:''}
+    </div>
+  </div>`;
+}
+function addCard(col,card){
+  pipeline[col].push(card);savePipeline();
+  if(document.getElementById('page-pipeline').classList.contains('active'))renderKanban();
+}
+function addToPipeline(title){addCard('ideas',{id:Date.now(),title,platform:'linkedin',notes:'From AI Studio'});showNotif('Added to Ideas!','success');}
+function savePipeline(){localStorage.setItem('magnet_pipeline',JSON.stringify(pipeline));}
+
+let addCardDefaultCol='ideas';
+function openAddCard(col='ideas'){addCardDefaultCol=col;document.getElementById('modal-add-card').classList.add('open');document.getElementById('new-card-title').focus();}
+function closeModal(){document.getElementById('modal-add-card').classList.remove('open');}
+function addCardFromModal(){
+  const title=document.getElementById('new-card-title').value.trim();
+  const platform=document.getElementById('new-card-platform').value;
+  const notes=document.getElementById('new-card-notes').value.trim();
+  if(!title)return showNotif('Enter a title','error');
+  addCard(addCardDefaultCol,{id:Date.now(),title,platform,notes});
+  closeModal();
+  document.getElementById('new-card-title').value='';
+  document.getElementById('new-card-notes').value='';
+  showNotif('Added!','success');renderKanban();
+}
+
+// ── NOTIF ──
+let notifTimer;
+function showNotif(msg,type=''){
+  const el=document.getElementById('notif');
+  el.textContent=msg;el.className='notif show '+(type||'');
+  clearTimeout(notifTimer);notifTimer=setTimeout(()=>el.classList.remove('show'),3000);
+}
+
+// ── INIT ──
+renderKanban();checkApiSetup();
+if(apiKey&&apiKey!=='demo')document.getElementById('settings-api-key').value=apiKey;
+</script>
+</body>
+</html>
