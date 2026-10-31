@@ -63,7 +63,7 @@ $('signup').onclick=()=>run(async()=>{
  if(password.length<6)throw Error('Password must be at least 6 characters.');
  const result=await auth('signup',{email,password,gotrue_meta_security:{},data:{}});
  if(result.access_token){setSession(result);await refreshUI();notice('Account created and signed in.')}
- else notice('Signup request accepted. Check your email for a confirmation link, then sign in.');
+ else notice('If this is a new account, check your email for confirmation. If you have already registered, click Sign in with the same email and password.');
 });
 $('logout').onclick=()=>run(async()=>{setSession(null);await refreshUI();notice('Signed out.')});
 $('createWorkspace').onclick=()=>run(async()=>{
