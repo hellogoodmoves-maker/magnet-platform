@@ -17,7 +17,7 @@ This is the source of truth for build progress. A feature is only [x] when imple
 ## Real publishing
 - [ ] LinkedIn OAuth approval and accounts linked. Test real account connection and refresh.
 - [ ] Meta OAuth approved for Facebook Pages and Instagram. Test real connection.
-- [ ] Publishing job worker with timezone-safe scheduling, deduplication and idempotency.
+- [~] Publishing queue foundation: publishing_jobs (unique target, state, retry fields) and publishing_events created; RLS enabled and direct client writes revoked. Verified schema exists. **No worker, social API delivery or end-to-end job test yet.**\n- [ ] Publishing job worker with timezone-safe scheduling, deduplication and idempotency.
 - [ ] Publish a test LinkedIn post to authorised account, verify platform ID.
 - [ ] Publish a test Facebook Page post and Instagram post to authorised accounts.
 - [ ] Retry, error handling and clear publishing history.
@@ -43,7 +43,7 @@ This is the source of truth for build progress. A feature is only [x] when imple
 - Facebook Groups publishing not assumed to be available through official Meta API.
 - Automatic outreach and personal DMs remain deferred.
 
-## Incident log
+## Incident log\n- 2026-10-31: Login remains user-reported FAILED after signup. Work continues on independent backend. Added publishing queue and event history, verified RLS and restricted client writes. Social publishing still unavailable.\n
 - 2026-10-31: User screenshot shows signup request accepted but no email received. Verified auth.users contains one confirmed user; auth logs show signup and verify actions. Signup button is functional, **sign-in and workspace flow not yet tested**. Updated ambiguous signup message to suggest signing in if previously registered.
 
 - 2026-10-31: Third report: users can type but buttons do nothing. Checked JS syntax (valid). Moved click-handling code from inline script into same-origin /studio/app.js to avoid inline-script blocking. Verified Vercel returns HTTP 200 for both HTML and JavaScript assets. **Actual browser click test still outstanding; do not mark resolved.**
