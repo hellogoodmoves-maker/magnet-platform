@@ -4,7 +4,17 @@
 <section class="card" id="auth"><h2>Access your workspace</h2><div class="cols"><div><label>Email</label><input id="email" type="email" autocomplete="email" placeholder="you@company.com"><label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="At least 6 characters"><div class="actions"><button class="primary" id="signin">Sign in</button><button id="signup">Create account</button></div><p class="muted">New accounts may need email confirmation. Check your inbox if prompted.</p></div><div><h2>Currently available</h2><p>Sign in, create workspaces, create and edit posts, and see saved information after signing out and back in.</p><p class="muted">Publishing, AI, social connections and multi-user invitations are not enabled yet.</p></div></div></section>
 <section id="app" class="hidden"><div class="cols"><div><div class="card"><div class="bar"><h2>Workspaces</h2></div><label>Active workspace</label><select id="workspace"></select><label>New workspace name</label><input id="workspaceName" maxlength="120" placeholder="Client or company name"><div class="actions"><button id="createWorkspace" class="primary">Create workspace</button></div></div><div class="card"><h2>Content library</h2><div id="posts"></div></div></div><div class="card"><h2 id="editorHeading">Create post</h2><label>Title</label><input id="title" maxlength="200" placeholder="Campaign or post title"><label>Caption</label><textarea id="body" placeholder="Write your post here"></textarea><label>Planned date and time</label><input id="date" type="datetime-local"><label>Status</label><select id="status"><option value="draft">Draft</option><option value="pending_approval">Pending approval</option><option value="approved">Approved</option></select><div class="actions"><button class="primary" id="save">Save post</button><button id="clear">New post</button><button id="delete" class="hidden">Delete post</button></div><p class="muted">Scheduled publishing is disabled until real social accounts and a job worker are connected.</p></div></div></section></div>
 <script type="module">
-import {createClient} from "https://esm.sh/@supabase/supabase-js@2.57.4";
+async function startMagnetic(){
+let createClient;
+try { ({createClient}=await import("https://esm.sh/@supabase/supabase-js@2.57.4")); }
+catch (primaryError) {
+  try {
+    await new Promise((resolve,reject)=>{const script=document.createElement("script");script.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js";script.onload=resolve;script.onerror=()=>reject(new Error("Backup library download failed"));document.head.append(script)});
+    createClient=window.supabase?.createClient;
+    if(!createClient) throw new Error("Backup library did not initialise");
+  } catch(backupError) { throw new Error("The application could not load its authentication library. Check your network or browser extensions and refresh. "+backupError.message); }
+}
+
 const db=createClient("https://mbzidcvdjcmowavhmrmr.supabase.co","sb_publishable_kOfhA0a2i5HZ-Qyb1cMOkg_qFuBthDw",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const $=x=>document.getElementById(x),safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;':'&quot;',"'":'&#39;'}[c]));
 let user=null,workspaces=[],workspaceId='',postList=[],editing=null;
@@ -26,4 +36,6 @@ $('delete').onclick=()=>attempt(async()=>{if(!editing||!confirm('Delete this pos
 $('clear').onclick=resetEditor;
 db.auth.onAuthStateChange((_event,session)=>{if((_event==='SIGNED_IN'||_event==='SIGNED_OUT')&&session?.user?.id!==user?.id)setTimeout(()=>refreshSession().catch(e=>notify(e.message,true)),0)});
 await attempt(async()=>{await refreshSession();notify(user?'Signed in. Your data is loaded from Supabase.':'Sign in or create an account. This build stores content in Supabase, not browser-only storage.')});
+}
+startMagnetic().catch(error=>{let notice=document.getElementById("notice");notice.textContent="Application startup failed: "+(error?.message||String(error));notice.className="msg err";document.getElementById("signin").disabled=true;document.getElementById("signup").disabled=true;});
 </script></body></html>
