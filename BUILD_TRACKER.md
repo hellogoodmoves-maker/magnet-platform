@@ -43,6 +43,9 @@ This is the source of truth for build progress. A feature is only [x] when imple
 - Facebook Groups publishing not assumed to be available through official Meta API.
 - Automatic outreach and personal DMs remain deferred.
 
+## Incident log
+- 2026-10-31: User reported signup and login buttons unresponsive. Identified unhandled browser-side module loading as a plausible cause; deployed fallback JS loader and visible startup error. **Root cause not yet conclusively established and user signup retest pending.**
+
 ## Progress log
 - 2026-10-31: Project and schema set up. GitHub Studio prototype exists; authentication and true publishing still outstanding.
 - 2026-10-31: Added this task tracker to GitHub.\n- 2026-10-31: Configured Vercel environment variables.\n- 2026-10-31: Added /studio/live.html with Supabase Auth, workspaces and posts UI. Verified GitHub commit, Vercel READY deployment, DB grants and policy count; end-to-end browser tests still pending.
