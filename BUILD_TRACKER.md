@@ -44,6 +44,7 @@ This is the source of truth for build progress. A feature is only [x] when imple
 - Automatic outreach and personal DMs remain deferred.
 
 ## Incident log
+- 2026-10-31: Third report: users can type but buttons do nothing. Checked JS syntax (valid). Moved click-handling code from inline script into same-origin /studio/app.js to avoid inline-script blocking. Verified Vercel returns HTTP 200 for both HTML and JavaScript assets. **Actual browser click test still outstanding; do not mark resolved.**
 - 2026-10-31: Second user report: signup still nonresponsive. Replaced external JS module import with standalone direct Supabase Auth/REST requests. Commit 2fdd2b9. Deployment pending verification and signup still **FAILED / UNVERIFIED**; do not mark auth complete.
 
 - 2026-10-31: User reported signup and login buttons unresponsive. Identified unhandled browser-side module loading as a plausible cause; deployed fallback JS loader and visible startup error. **Root cause not yet conclusively established and user signup retest pending.**
