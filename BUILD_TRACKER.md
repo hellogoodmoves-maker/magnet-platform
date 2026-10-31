@@ -9,9 +9,9 @@ This is the source of truth for build progress. A feature is only [x] when imple
 - [x] Initial database schema created: workspaces, workspace_members, social_accounts, posts, post_targets. Verified all five tables present with row-level security enabled.
 - [~] Database security configuration. RLS enabled; initial advisor warnings identified and anon execution revoked. **Not yet passed comprehensive RLS cross-tenant testing.**
 - [x] Browser-only Studio prototype committed at studio/index.html. Verified GitHub commit; not verified as end-to-end functional production service.
-- [x] Vercel environment configured with Magnetic Supabase URL and publishable key. Verified successful creation for production, preview and development.\n- [ ] Magnetic app connects to Supabase and authenticates real users. Test signup, email verification, sign-in, sign-out, refresh.
-- [ ] Create a workspace using authenticated user. Test persistence after sign-out and sign-in.
-- [ ] Create/edit/delete posts from the real database. Test data persists in a different browser/device.
+- [x] Vercel environment configured with Magnetic Supabase URL and publishable key. Verified successful creation for production, preview and development.\n- [~] Magnetic cloud beta at /studio/live.html uses Supabase Auth (signup/sign-in/sign-out) and queries workspaces/posts. Committed and deployed; **requires human browser end-to-end test before completion**.
+- [~] Workspace creation UI calls create_workspace RPC. Database permissions checked; browser persistence test outstanding.
+- [~] Cloud beta includes create/edit/delete posts against Supabase. Browser cross-session/device testing outstanding.
 - [ ] Test user isolation: second user cannot access first user's workspace, posts, accounts or targets.
 - [ ] Workspace invitation and role management. Test owner/admin/editor/viewer permissions.
 ## Real publishing
@@ -45,4 +45,4 @@ This is the source of truth for build progress. A feature is only [x] when imple
 
 ## Progress log
 - 2026-10-31: Project and schema set up. GitHub Studio prototype exists; authentication and true publishing still outstanding.
-- 2026-10-31: Added this task tracker to GitHub.\n- 2026-10-31: Configured Vercel environment variables. Does not yet mean the Studio browser application uses the database.
+- 2026-10-31: Added this task tracker to GitHub.\n- 2026-10-31: Configured Vercel environment variables.\n- 2026-10-31: Added /studio/live.html with Supabase Auth, workspaces and posts UI. Verified GitHub commit, Vercel READY deployment, DB grants and policy count; end-to-end browser tests still pending.
