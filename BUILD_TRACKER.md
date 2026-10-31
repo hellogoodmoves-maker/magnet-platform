@@ -44,6 +44,8 @@ This is the source of truth for build progress. A feature is only [x] when imple
 - Automatic outreach and personal DMs remain deferred.
 
 ## Incident log
+- 2026-10-31: User screenshot shows signup request accepted but no email received. Verified auth.users contains one confirmed user; auth logs show signup and verify actions. Signup button is functional, **sign-in and workspace flow not yet tested**. Updated ambiguous signup message to suggest signing in if previously registered.
+
 - 2026-10-31: Third report: users can type but buttons do nothing. Checked JS syntax (valid). Moved click-handling code from inline script into same-origin /studio/app.js to avoid inline-script blocking. Verified Vercel returns HTTP 200 for both HTML and JavaScript assets. **Actual browser click test still outstanding; do not mark resolved.**
 - 2026-10-31: Second user report: signup still nonresponsive. Replaced external JS module import with standalone direct Supabase Auth/REST requests. Commit 2fdd2b9. Deployment pending verification and signup still **FAILED / UNVERIFIED**; do not mark auth complete.
 
