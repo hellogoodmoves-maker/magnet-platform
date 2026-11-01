@@ -43,7 +43,8 @@ This is the source of truth for build progress. A feature is only [x] when imple
 - Facebook Groups publishing not assumed to be available through official Meta API.
 - Automatic outreach and personal DMs remain deferred.
 
-## Incident log\n- 2026-10-31: Login remains user-reported FAILED after signup. Work continues on independent backend. Added publishing queue and event history, verified RLS and restricted client writes. Social publishing still unavailable.\n
+## Incident log
+- 2026-11-01: Prioritised login. Updated `studio/app.js` to distinguish successful auth from workspace-load failure, added password recovery handler, and added Reset password to `studio/live.html`. GitHub commits 22ff333 and 6e49d74. **Production Vercel was still serving older HTML/JS when checked; deployment and end-to-end login NOT verified.** Inspect GitHub-Vercel deployment linkage.\n\n- 2026-10-31: Login remains user-reported FAILED after signup. Work continues on independent backend. Added publishing queue and event history, verified RLS and restricted client writes. Social publishing still unavailable.\n
 - 2026-10-31: User screenshot shows signup request accepted but no email received. Verified auth.users contains one confirmed user; auth logs show signup and verify actions. Signup button is functional, **sign-in and workspace flow not yet tested**. Updated ambiguous signup message to suggest signing in if previously registered.
 
 - 2026-10-31: Third report: users can type but buttons do nothing. Checked JS syntax (valid). Moved click-handling code from inline script into same-origin /studio/app.js to avoid inline-script blocking. Verified Vercel returns HTTP 200 for both HTML and JavaScript assets. **Actual browser click test still outstanding; do not mark resolved.**
