@@ -55,7 +55,7 @@ async function run(fn){try{await fn()}catch(e){console.error('Magnetic action fa
 $('signin').onclick=()=>run(async()=>{
  const email=$('email').value.trim(),password=$('password').value;
  if(!email||!password)throw Error('Enter your email and password.');
- setSession(await auth('token?grant_type=password',{email,password}));await refreshUI();notice('Signed in successfully.');
+ const result=await auth('token?grant_type=password',{email,password});\n if(!result?.access_token)throw Error('Sign-in did not return a session.');\n setSession(result);notice('Credentials accepted. Loading your workspace…');\n try{await refreshUI();notice('Signed in successfully.')}catch(error){\n  $('auth').classList.add('hidden');$('app').classList.remove('hidden');\n  $('logout').classList.remove('hidden');$('identity').textContent=email;\n  notice('Signed in, but workspace loading failed: '+(error?.message||error),true);\n }
 });
 $('signup').onclick=()=>run(async()=>{
  const email=$('email').value.trim(),password=$('password').value;
@@ -87,6 +87,6 @@ $('delete').onclick=()=>run(async()=>{
 $('clear').onclick=resetEditor;
 window.addEventListener('error',e=>notice('Application error: '+e.message,true));
 window.addEventListener('unhandledrejection',e=>notice('Application error: '+(e.reason?.message||e.reason),true));
-setSession(getSaved());
-run(async()=>{await refreshUI();if(!user)notice('Ready. Enter an email and password to create an account or sign in.');});
+$('resetPassword').onclick=()=>run(async()=>{\n const email=$('email').value.trim();if(!email||!email.includes('@'))throw Error('Enter your email address first.');\n await auth('recover',{email});notice('If the address belongs to an account, a password reset email has been requested. Check spam too.');\n});\nsetSession(getSaved());
+run(async()=>{await refreshUI();if(!user)notice('Ready. Sign in with your existing email and password, or use Reset password.');});
 })();
