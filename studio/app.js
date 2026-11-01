@@ -58,7 +58,15 @@ async function run(fn){try{await fn()}catch(e){console.error('Magnetic action fa
 $('signin').onclick=()=>run(async()=>{
  const email=$('email').value.trim(),password=$('password').value;
  if(!email||!password)throw Error('Enter your email and password.');
- notice('Sign-in button clicked. Contacting Supabase…');\n const result=await auth('token?grant_type=password',{email,password});\n if(!result?.access_token)throw Error('Sign-in did not return a session.');\n setSession(result);notice('Credentials accepted. Loading your workspace…');\n try{await refreshUI();notice('Signed in successfully.')}catch(error){\n  $('auth').classList.add('hidden');$('app').classList.remove('hidden');\n  $('logout').classList.remove('hidden');$('identity').textContent=email;\n  notice('Signed in, but workspace loading failed: '+(error?.message||error),true);\n }
+ notice('Sign-in button clicked. Contacting Supabase…');
+ const result=await auth('token?grant_type=password',{email,password});
+ if(!result?.access_token)throw Error('Sign-in did not return a session.');
+ setSession(result);notice('Credentials accepted. Loading your workspace…');
+ try{await refreshUI();notice('Signed in successfully.')}catch(error){
+  $('auth').classList.add('hidden');$('app').classList.remove('hidden');
+  $('logout').classList.remove('hidden');$('identity').textContent=email;
+  notice('Signed in, but workspace loading failed: '+(error?.message||error),true);
+ }
 });
 $('signup').onclick=()=>run(async()=>{
  const email=$('email').value.trim(),password=$('password').value;
@@ -95,6 +103,10 @@ $('testConnection').onclick=()=>run(async()=>{
  const result=await request('/auth/v1/settings');
  notice('Connection OK. Authentication API responded. Email sign-in enabled: '+String(result?.external?.email===true||result?.disable_signup===false)+'.');
 });
-$('resetPassword').onclick=()=>run(async()=>{\n const email=$('email').value.trim();if(!email||!email.includes('@'))throw Error('Enter your email address first.');\n await auth('recover',{email});notice('If the address belongs to an account, a password reset email has been requested. Check spam too.');\n});\nsetSession(getSaved());
+$('resetPassword').onclick=()=>run(async()=>{
+ const email=$('email').value.trim();if(!email||!email.includes('@'))throw Error('Enter your email address first.');
+ await auth('recover',{email});notice('If the address belongs to an account, a password reset email has been requested. Check spam too.');
+});
+setSession(getSaved());
 run(async()=>{await refreshUI();if(!user)notice('Ready. Sign in with your existing email and password, or use Reset password.');});
 })();
