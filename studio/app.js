@@ -9,7 +9,10 @@ function notice(message,error=false){$('notice').textContent=message;$('notice')
 function getSaved(){try{return JSON.parse(localStorage.getItem(STORE))}catch{return null}}
 function setSession(s){session=s;if(s?.access_token)localStorage.setItem(STORE,JSON.stringify(s));else localStorage.removeItem(STORE)}
 async function request(route,options={}){
- const response=await fetch(BASE+route,{...options,headers:{apikey:KEY,'Content-Type':'application/json',...(session?.access_token?{Authorization:'Bearer '+session.access_token}:{}),...(options.headers||{})}});
+ const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);let response;
+ try{response=await fetch(BASE+route,{...options,signal:controller.signal,headers:{apikey:KEY,'Content-Type':'application/json',...(session?.access_token?{Authorization:'Bearer '+session.access_token}:{}),...(options.headers||{})}})}
+ catch(e){throw Error(e?.name==='AbortError'?'Connection timed out after 12 seconds.':'Unable to reach Supabase from this browser: '+(e?.message||String(e)))}
+ finally{clearTimeout(timeout)}
  let data;const text=await response.text();try{data=text?JSON.parse(text):null}catch{data=text}
  if(!response.ok)throw Error(data?.msg||data?.message||data?.error_description||data?.error||('Request failed: HTTP '+response.status));
  return data;
@@ -55,7 +58,7 @@ async function run(fn){try{await fn()}catch(e){console.error('Magnetic action fa
 $('signin').onclick=()=>run(async()=>{
  const email=$('email').value.trim(),password=$('password').value;
  if(!email||!password)throw Error('Enter your email and password.');
- const result=await auth('token?grant_type=password',{email,password});\n if(!result?.access_token)throw Error('Sign-in did not return a session.');\n setSession(result);notice('Credentials accepted. Loading your workspace…');\n try{await refreshUI();notice('Signed in successfully.')}catch(error){\n  $('auth').classList.add('hidden');$('app').classList.remove('hidden');\n  $('logout').classList.remove('hidden');$('identity').textContent=email;\n  notice('Signed in, but workspace loading failed: '+(error?.message||error),true);\n }
+ notice('Sign-in button clicked. Contacting Supabase…');\n const result=await auth('token?grant_type=password',{email,password});\n if(!result?.access_token)throw Error('Sign-in did not return a session.');\n setSession(result);notice('Credentials accepted. Loading your workspace…');\n try{await refreshUI();notice('Signed in successfully.')}catch(error){\n  $('auth').classList.add('hidden');$('app').classList.remove('hidden');\n  $('logout').classList.remove('hidden');$('identity').textContent=email;\n  notice('Signed in, but workspace loading failed: '+(error?.message||error),true);\n }
 });
 $('signup').onclick=()=>run(async()=>{
  const email=$('email').value.trim(),password=$('password').value;
@@ -87,6 +90,11 @@ $('delete').onclick=()=>run(async()=>{
 $('clear').onclick=resetEditor;
 window.addEventListener('error',e=>notice('Application error: '+e.message,true));
 window.addEventListener('unhandledrejection',e=>notice('Application error: '+(e.reason?.message||e.reason),true));
+$('testConnection').onclick=()=>run(async()=>{
+ notice('Checking browser connection to Supabase…');
+ const result=await request('/auth/v1/settings');
+ notice('Connection OK. Authentication API responded. Email sign-in enabled: '+String(result?.external?.email===true||result?.disable_signup===false)+'.');
+});
 $('resetPassword').onclick=()=>run(async()=>{\n const email=$('email').value.trim();if(!email||!email.includes('@'))throw Error('Enter your email address first.');\n await auth('recover',{email});notice('If the address belongs to an account, a password reset email has been requested. Check spam too.');\n});\nsetSession(getSaved());
 run(async()=>{await refreshUI();if(!user)notice('Ready. Sign in with your existing email and password, or use Reset password.');});
 })();
